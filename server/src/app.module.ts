@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import config from './config';
 import MongooseConfigService from './config/mongoose.config';
+import QuestionsModule from './questions/questions.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import MongooseConfigService from './config/mongoose.config';
       imports: [ConfigModule],
       useClass: MongooseConfigService,
     }),
+    QuestionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
