@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { QuestionNotFoundError } from 'src/errors';
 import { Difficulty } from './questions.const';
 import { Question, QuestionDocument } from './questions.schema';
 
@@ -10,10 +11,14 @@ export default class QuestionsRepository {
     @InjectModel(Question.name) private questionModel: Model<QuestionDocument>,
   ) {}
 
-  public async find(difficulty: Difficulty) {
-    return this.questionModel.aggregate([
+  public async find(difficulty: Difficulty): Promise<Question> {
+    const questions: Question[] = await this.questionModel.aggregate([
       { $match: { difficulty } },
       { $sample: { size: 1 } },
     ]);
+
+    if (questions.length == 0) throw new QuestionNotFoundError(difficulty);
+
+    return questions[0];
   }
 }
