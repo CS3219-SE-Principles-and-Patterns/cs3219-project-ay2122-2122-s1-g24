@@ -9,6 +9,7 @@ export class Question {
 
   @Prop({
     required: true,
+    index: true,
     enum: [Difficulty.EASY, Difficulty.MEDIUM, Difficulty.HARD],
   })
   difficulty: string;
