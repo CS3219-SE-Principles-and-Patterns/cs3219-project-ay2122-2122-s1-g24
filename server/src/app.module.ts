@@ -5,6 +5,7 @@ import AuthModule from 'auth/auth.module';
 import config from './config';
 import MongooseConfigService from './config/mongoose.config';
 import QuestionsModule from './questions/questions.module';
+import MatchmakingModule from './matchmaking/matchmaking.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import QuestionsModule from './questions/questions.module';
     }),
     AuthModule,
     QuestionsModule,
+    MatchmakingModule,
   ],
 })
-export class AppModule {}
+export default class AppModule {}
