@@ -15,8 +15,8 @@ import MatchmakingModule from './matchmaking/matchmaking.module';
       useClass: MongooseConfigService,
     }),
     AuthModule,
-    QuestionsModule,
     MatchmakingModule,
+    QuestionsModule,
   ],
 })
 export default class AppModule {}
