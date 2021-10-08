@@ -1,9 +1,9 @@
 import { MongoDBConfig } from './mongoose.config';
 
 export interface OAuthGoogleConfig {
-  id: string;
-  secret: string;
-  redirectUrl: string;
+  clientID: string;
+  clientSecret: string;
+  callbackURL: string;
 }
 
 interface Config {
@@ -23,9 +23,9 @@ const config = (): Config => ({
     password: process.env.MONGODB_PASSWORD || '',
   },
   oAuthGoogle: {
-    id: process.env.OAUTH_GOOGLE_ID,
-    secret: process.env.OAUTH_GOOGLE_SECRET,
-    redirectUrl: process.env.OAUTH_GOOGLE_REDIRECT_URL,
+    clientID: process.env.OAUTH_GOOGLE_ID,
+    clientSecret: process.env.OAUTH_GOOGLE_SECRET,
+    callbackURL: process.env.OAUTH_GOOGLE_REDIRECT_URL,
   },
   jwtSecret: process.env.JWT_SECRET,
 });
