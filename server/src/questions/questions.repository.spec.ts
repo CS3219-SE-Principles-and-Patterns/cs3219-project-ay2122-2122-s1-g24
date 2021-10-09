@@ -54,7 +54,8 @@ describe('/src/notes/notes.repository', () => {
 
       const result = await questionsRepository.find(Difficulty.EASY);
 
-      expect(questionModel.aggregate).toBeCalledWith([
+      expect(questionModel.aggregate).toBeCalledTimes(1);
+      expect(questionModel.aggregate).toHaveBeenLastCalledWith([
         { $match: { difficulty: Difficulty.EASY } },
         { $sample: { size: 1 } },
       ]);
@@ -66,7 +67,8 @@ describe('/src/notes/notes.repository', () => {
 
       const result = await questionsRepository.find(Difficulty.MEDIUM);
 
-      expect(questionModel.aggregate).toBeCalledWith([
+      expect(questionModel.aggregate).toBeCalledTimes(1);
+      expect(questionModel.aggregate).toHaveBeenLastCalledWith([
         { $match: { difficulty: Difficulty.MEDIUM } },
         { $sample: { size: 1 } },
       ]);
@@ -78,7 +80,8 @@ describe('/src/notes/notes.repository', () => {
 
       const result = await questionsRepository.find(Difficulty.HARD);
 
-      expect(questionModel.aggregate).toBeCalledWith([
+      expect(questionModel.aggregate).toBeCalledTimes(1);
+      expect(questionModel.aggregate).toHaveBeenLastCalledWith([
         { $match: { difficulty: Difficulty.HARD } },
         { $sample: { size: 1 } },
       ]);
