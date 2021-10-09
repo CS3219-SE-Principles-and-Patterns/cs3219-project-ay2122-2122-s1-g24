@@ -1,7 +1,6 @@
 import { Controller, Get, Request, UseGuards } from '@nestjs/common';
 import AuthService from './auth.service';
 import GoogleOAuthGuard from './google/google-oauth.guard';
-import JwtAuthGuard from './jwt/jwt.guard';
 
 @Controller()
 export default class AuthController {
