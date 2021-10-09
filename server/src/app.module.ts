@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import AuthModule from 'auth/auth.module';
+import AuthModule from './auth/auth.module';
 import config from './config';
 import MongooseConfigService from './config/mongoose.config';
+import MatchmakingModule from './matchmaking/matchmaking.module';
 import QuestionsModule from './questions/questions.module';
 
 @Module({
@@ -14,7 +15,8 @@ import QuestionsModule from './questions/questions.module';
       useClass: MongooseConfigService,
     }),
     AuthModule,
+    MatchmakingModule,
     QuestionsModule,
   ],
 })
-export class AppModule {}
+export default class AppModule {}

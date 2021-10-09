@@ -20,5 +20,6 @@ import JwtStrategy from './jwt/jwt.strategy';
   ],
   controllers: [AuthController],
   providers: [AuthService, GoogleOAuthStrategy, JwtStrategy],
+  exports: [AuthService],
 })
 export default class AuthModule {}
