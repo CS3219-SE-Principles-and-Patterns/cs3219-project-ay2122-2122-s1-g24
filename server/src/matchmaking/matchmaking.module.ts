@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import QuestionsModule from 'src/questions/questions.module';
+import AuthModule from 'auth/auth.module';
+import QuestionsModule from '../questions/questions.module';
 import MatchmakingController from './matchmaking.controller';
 
 @Module({
-  imports: [QuestionsModule],
+  imports: [AuthModule, QuestionsModule],
   controllers: [MatchmakingController],
 })
 export default class MatchmakingModule {}

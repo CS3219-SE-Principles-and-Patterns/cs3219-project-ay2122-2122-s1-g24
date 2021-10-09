@@ -1,23 +1,28 @@
 import {
   BadRequestException,
   Controller,
-  Delete,
   Get,
   Query,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
 import isEmpty from 'lodash/isEmpty';
+import AuthService from '../auth/auth.service';
+import JwtAuthGuard from '../auth/jwt/jwt.guard';
+import QuestionsRepository from '../questions/questions.repository';
 import { Difficulty } from '../questions/questions.const';
 import { Question } from '../questions/questions.schema';
-import QuestionsRepository from '../questions/questions.repository';
 import { QuestionNotFoundError } from '../errors';
 
 @Controller('matchmaking')
 export default class MatchmakingController {
   public constructor(
+    private readonly authService: AuthService,
     private readonly questionsRepository: QuestionsRepository,
   ) {}
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   public async findMatch(@Query('difficulty') difficulty: Difficulty) {
     try {
       if (isEmpty(difficulty))
@@ -44,8 +49,12 @@ export default class MatchmakingController {
     }
   }
 
-  @Delete('end-session')
-  public async endSession() {
-    /* temp */
+  @Get('end-session')
+  @UseGuards(JwtAuthGuard)
+  public endSession(@Request() req) {
+    const { roomId, iat, exp, ...user } = req.user;
+    const accessToken = this.authService.login(user);
+
+    return { accessToken };
   }
 }
