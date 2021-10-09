@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Controller,
   Get,
+  InternalServerErrorException,
   Query,
   Request,
   UseGuards,
@@ -43,7 +44,7 @@ export default class MatchmakingController {
       return { question };
     } catch (err) {
       if (err instanceof QuestionNotFoundError)
-        throw new BadRequestException(err.message);
+        throw new InternalServerErrorException(err.message);
 
       throw err;
     }

@@ -59,7 +59,8 @@ describe('/src/notes/notes.repository', () => {
         { $match: { difficulty: Difficulty.EASY } },
         { $sample: { size: 1 } },
       ]);
-      expect(result).toStrictEqual(result);
+
+      expect(result).toStrictEqual(expectedEasyResult);
     });
 
     it('should find a random medium question if difficulty is medium', async () => {
@@ -72,7 +73,8 @@ describe('/src/notes/notes.repository', () => {
         { $match: { difficulty: Difficulty.MEDIUM } },
         { $sample: { size: 1 } },
       ]);
-      expect(result).toStrictEqual(result);
+
+      expect(result).toStrictEqual(expectedMediumResult);
     });
 
     it('should find a random hard question if difficulty is hard', async () => {
@@ -85,7 +87,8 @@ describe('/src/notes/notes.repository', () => {
         { $match: { difficulty: Difficulty.HARD } },
         { $sample: { size: 1 } },
       ]);
-      expect(result).toStrictEqual(result);
+
+      expect(result).toStrictEqual(expectedHardResult);
     });
 
     it('should throw QuestionNotFoundError if no question found', () => {
