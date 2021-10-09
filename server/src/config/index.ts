@@ -1,8 +1,15 @@
 import { MongoDBConfig } from './mongoose.config';
 
+export interface OAuthGoogleConfig {
+  clientID: string;
+  clientSecret: string;
+  callbackURL: string;
+}
+
 interface Config {
   port: number;
   mongodb: MongoDBConfig;
+  oAuthGoogle: OAuthGoogleConfig;
   jwtSecret: string;
 }
 
@@ -14,6 +21,11 @@ const config = (): Config => ({
     database: process.env.MONGODB_DATABASE,
     username: process.env.MONGODB_USERNAME,
     password: process.env.MONGODB_PASSWORD || '',
+  },
+  oAuthGoogle: {
+    clientID: process.env.OAUTH_GOOGLE_ID,
+    clientSecret: process.env.OAUTH_GOOGLE_SECRET,
+    callbackURL: process.env.OAUTH_GOOGLE_REDIRECT_URL,
   },
   jwtSecret: process.env.JWT_SECRET,
 });

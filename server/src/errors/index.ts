@@ -1,4 +1,4 @@
-import { Difficulty } from 'src/questions/questions.const';
+import { Difficulty } from '../questions/questions.const';
 
 export class QuestionNotFoundError extends Error {
   constructor(difficulty: Difficulty) {
