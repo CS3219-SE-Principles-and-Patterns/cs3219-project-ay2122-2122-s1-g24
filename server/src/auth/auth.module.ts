@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import AuthController from './auth.controller';
 import GoogleOAuthStrategy from './google/google-oauth.strategy';
+import JwtStrategy from './jwt/jwt.strategy';
 
 @Module({
   imports: [
@@ -16,6 +17,6 @@ import GoogleOAuthStrategy from './google/google-oauth.strategy';
     }),
   ],
   controllers: [AuthController],
-  providers: [GoogleOAuthStrategy],
+  providers: [GoogleOAuthStrategy, JwtStrategy],
 })
 export default class AuthModule {}

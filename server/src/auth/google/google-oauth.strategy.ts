@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
-import { User } from '../auth.const';
+import { JwtPayload } from '../auth.const';
 import { OAuthGoogleConfig } from 'config';
 import { Profile, Strategy } from 'passport-google-oauth20';
 
@@ -21,7 +21,7 @@ export default class GoogleOAuthStrategy extends PassportStrategy(
     _accessToken: string,
     _refreshToken: string,
     profile: Profile,
-  ): User {
+  ): JwtPayload {
     const {
       provider,
       id: sub,

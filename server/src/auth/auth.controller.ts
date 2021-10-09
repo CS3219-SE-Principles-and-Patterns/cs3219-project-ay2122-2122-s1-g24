@@ -5,7 +5,7 @@ import GoogleOAuthGuard from './google/google-oauth.guard';
 export default class AuthController {
   @Get('login')
   @UseGuards(GoogleOAuthGuard)
-  public async login(@Request() req) {
+  public login(@Request() req) {
     return req.user;
   }
 }
