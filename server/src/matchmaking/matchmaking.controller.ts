@@ -9,10 +9,10 @@ import {
 import isEmpty from 'lodash/isEmpty';
 import AuthService from '../auth/auth.service';
 import JwtAuthGuard from '../auth/jwt/jwt.guard';
-import QuestionsRepository from '../questions/questions.repository';
-import { Difficulty } from '../questions/questions.const';
-import { Question } from '../questions/questions.schema';
 import { QuestionNotFoundError } from '../errors';
+import { Difficulty } from '../questions/questions.const';
+import QuestionsRepository from '../questions/questions.repository';
+import { Question } from '../questions/questions.schema';
 
 @Controller('matchmaking')
 export default class MatchmakingController {

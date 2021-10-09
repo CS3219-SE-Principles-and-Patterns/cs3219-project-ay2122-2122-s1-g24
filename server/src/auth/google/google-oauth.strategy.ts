@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
-import { JwtPayload } from '../auth.const';
-import { OAuthGoogleConfig } from 'config';
 import { Profile, Strategy } from 'passport-google-oauth20';
+import { OAuthGoogleConfig } from '../../config';
+import { JwtPayload } from '../auth.const';
 
 @Injectable()
 export default class GoogleOAuthStrategy extends PassportStrategy(
