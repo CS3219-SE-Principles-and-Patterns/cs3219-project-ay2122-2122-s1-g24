@@ -15,12 +15,10 @@ function App() {
     <div>
       <Header />
       <Router>
-
           <Switch>
             <Route exact path={'/'} component={homepage}></Route>
             <Route exact path={'/room'} component={room}></Route>
           </Switch>
-
       </Router>
     </div>
   );
