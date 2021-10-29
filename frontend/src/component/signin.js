@@ -4,8 +4,6 @@ import GoogleLogin from "react-google-login"
 
 const clientId = process.env.OAUTH_GOOGLE_ID
 const SignIn= () => {
-    const [username, setUserName] = useState();
-    const [password, setPassword] = useState();
 
     async function login({ setToken }) {
 
