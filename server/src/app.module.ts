@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import RoomsGateway from './rooms/rooms.gateway';
 import AuthModule from './auth/auth.module';
 import config from './config';
 import MongooseConfigService from './config/mongoose.config';
@@ -18,5 +19,6 @@ import QuestionsModule from './questions/questions.module';
     MatchmakingModule,
     QuestionsModule,
   ],
+  providers: [RoomsGateway],
 })
 export default class AppModule {}
