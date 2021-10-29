@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Date } from 'mongoose';
 import { Difficulty } from 'questions/questions.const';
 
 @Schema({ collection: 'matches' })
@@ -15,8 +16,12 @@ export class Match {
     enum: [Difficulty.EASY, Difficulty.MEDIUM, Difficulty.HARD],
   })
   difficulty: string;
+
+  @Prop({ type: Date, default: Date.now(), expires: '60s' })
+  createdAt: Date;
 }
 
 export type MatchDocument = Match & Document;
 
-export const MatchSchema = SchemaFactory.createForClass(Match);
+const MatchSchema = SchemaFactory.createForClass(Match);
+export { MatchSchema };

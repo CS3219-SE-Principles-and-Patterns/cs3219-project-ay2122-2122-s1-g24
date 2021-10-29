@@ -9,4 +9,8 @@ export default class AuthService {
   public login(jwtPayload: JwtPayload): string {
     return this.jwtService.sign(jwtPayload);
   }
+
+  public verify(token: string): JwtPayload {
+    return this.jwtService.verify(token);
+  }
 }

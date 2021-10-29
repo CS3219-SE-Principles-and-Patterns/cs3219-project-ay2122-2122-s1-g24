@@ -1,14 +1,12 @@
 import {
   ConnectedSocket,
   MessageBody,
-  OnGatewayConnection,
   OnGatewayDisconnect,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import * as Automerge from 'automerge';
 import MatchesRepository from './matches.repository';
 import { Difficulty } from 'questions/questions.const';
 import { JwtService } from '@nestjs/jwt';
@@ -48,7 +46,7 @@ export class MatchmakingGateway implements OnGatewayDisconnect {
       const user = this.jwtService.verify(token);
 
       const match = await this.matchRepo.find(diff);
-      if (match) {
+      if (match && this.server.sockets[match.socketId]) {
         const room = 'room';
         client.emit('assignRoom', room);
         this.emitRoomToUser(match.socketId, room);

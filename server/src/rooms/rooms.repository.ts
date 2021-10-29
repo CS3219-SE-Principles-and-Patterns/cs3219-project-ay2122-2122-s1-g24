@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Room, RoomDocument } from './rooms.schema';
-import { v4 as uuidv4 } from 'uuid';
 import { Question } from 'questions/questions.schema';
 
 @Injectable()
