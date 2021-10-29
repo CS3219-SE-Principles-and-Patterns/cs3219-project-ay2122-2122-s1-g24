@@ -8,9 +8,7 @@ const Header = () => {
       <Navbar.Brand href="/">Peer Prep</Navbar.Brand>
       <Navbar.Toggle />
       <Navbar.Collapse className="justify-content-end">
-        <Navbar.Text>
-          Signed in as: <a href="#login">Rishabh Paliwal Prince of Darkness</a>
-        </Navbar.Text>
+      <Navbar.Brand href="/login">login</Navbar.Brand>
       </Navbar.Collapse>
     </Container>
   </Navbar>
