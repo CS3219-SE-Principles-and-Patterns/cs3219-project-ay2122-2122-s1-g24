@@ -9,12 +9,12 @@ on:
   pull_request:
     branches: [ main ]
 
-jobs:
-  build:
-    defaults:
+defaults:
       run:
         working-directory: server
-        
+
+jobs:
+  build:    
     runs-on: ubuntu-latest
 
     strategy:
