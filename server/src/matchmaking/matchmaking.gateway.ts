@@ -8,7 +8,7 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import MatchesRepository from './matches.repository';
-import { Difficulty } from 'questions/questions.const';
+import { Difficulty } from '../questions/questions.const';
 import { JwtService } from '@nestjs/jwt';
 
 @WebSocketGateway()

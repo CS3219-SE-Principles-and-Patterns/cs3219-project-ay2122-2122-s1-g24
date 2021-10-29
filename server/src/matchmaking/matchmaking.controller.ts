@@ -14,20 +14,13 @@ import { QuestionNotFoundError } from '../errors';
 import { Difficulty } from '../questions/questions.const';
 import QuestionsRepository from '../questions/questions.repository';
 import { Question } from '../questions/questions.schema';
-import MatchesRepository from './matches.repository';
 
 @Controller('matchmaking')
 export default class MatchmakingController {
   public constructor(
     private readonly authService: AuthService,
     private readonly questionsRepository: QuestionsRepository,
-    private readonly matchesRepo: MatchesRepository,
   ) {}
-
-  @Get('test')
-  public async test() {
-    this.matchesRepo.addUser('user', 'sock', Difficulty.EASY);
-  }
 
   @Get()
   @UseGuards(JwtAuthGuard)

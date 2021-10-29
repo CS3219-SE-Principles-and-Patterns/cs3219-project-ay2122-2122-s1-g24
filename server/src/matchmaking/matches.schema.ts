@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Date } from 'mongoose';
-import { Difficulty } from 'questions/questions.const';
+import { Difficulty } from '../questions/questions.const';
 
 @Schema({ collection: 'matches' })
 export class Match {

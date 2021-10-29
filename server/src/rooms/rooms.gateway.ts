@@ -8,7 +8,7 @@ import {
 import { Server, Socket } from 'socket.io';
 import * as Automerge from 'automerge';
 import RoomsRepository from './rooms.repository';
-import AuthService from 'auth/auth.service';
+import AuthService from '../auth/auth.service';
 
 @WebSocketGateway()
 export default class RoomsGateway {
