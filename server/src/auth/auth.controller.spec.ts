@@ -1,8 +1,12 @@
+import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import AuthController from './auth.controller';
 import AuthService from './auth.service';
 
+const frontendURL = 'http://frontend.com';
+const configService = { get: () => frontendURL };
 const authService = { login: jest.fn() };
+const response = { redirect: jest.fn() };
 
 describe('/src/auth/auth.controller', () => {
   let authController: AuthController;
@@ -10,10 +14,12 @@ describe('/src/auth/auth.controller', () => {
   beforeAll(async () => {
     const authModule: TestingModule = await Test.createTestingModule({
       controllers: [AuthController],
-      providers: [AuthService],
+      providers: [AuthService, ConfigService],
     })
       .overrideProvider(AuthService)
       .useValue(authService)
+      .overrideProvider(ConfigService)
+      .useValue(configService)
       .compile();
 
     authController = authModule.get<AuthController>(AuthController);
@@ -29,7 +35,6 @@ describe('/src/auth/auth.controller', () => {
         sub: 123,
         provider: 'google',
         name: 'Alban',
-        picture: 'https://randomuser.me/api/portraits/men/42.jpg',
       },
     };
     const accessToken = 'test-token';
@@ -37,18 +42,17 @@ describe('/src/auth/auth.controller', () => {
     it('should return accessToken, name and picture of user', () => {
       authService.login.mockReturnValueOnce(accessToken);
 
-      const result = authController.login(request);
+      authController.login(request, response);
 
       expect(authService.login).toBeCalledTimes(1);
       expect(authService.login).toHaveBeenLastCalledWith(request.user);
 
-      expect(result).toStrictEqual({
-        accessToken,
-        user: {
-          name: request.user.name,
-          picture: request.user.picture,
-        },
-      });
+      expect(response.redirect).toHaveBeenCalledTimes(1);
+      expect(response.redirect).toHaveBeenLastCalledWith(
+        `${frontendURL}/setAuth?accessToken=${accessToken}&user=${JSON.stringify(
+          { name: 'Alban' },
+        )}`,
+      );
     });
   });
 });
