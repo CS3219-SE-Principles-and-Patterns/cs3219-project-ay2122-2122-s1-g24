@@ -1,9 +1,16 @@
-const room = () => {
+import React, { useState } from 'react';
+import CodeEnv from './codeEnv';
+import Question from './question';
+
+const DEFAULT_VALUE = '// Enter code here'
+
+const Room = () => {
     return (
         <div>
-            Text box for coding together coming soon
+            <Question/>
+            <CodeEnv/>
         </div>
     )
 }
 
-export default room;
+export default Room;
