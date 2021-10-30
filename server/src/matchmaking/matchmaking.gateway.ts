@@ -11,7 +11,7 @@ import MatchesRepository from './matches.repository';
 import { Difficulty } from '../questions/questions.const';
 import { JwtService } from '@nestjs/jwt';
 
-@WebSocketGateway()
+@WebSocketGateway({ namespace: 'matchmaking' })
 export class MatchmakingGateway implements OnGatewayDisconnect {
   public constructor(
     private matchRepo: MatchesRepository,
