@@ -11,6 +11,7 @@ import room from './component/room'
 import Header from './component/navbar';
 import SignIn from './component/signin';
 import SetToken from './component/setAuth';
+import SignOut from './component/logout'
 
 function App() {
   const [token, setToken] = useState();
@@ -25,6 +26,7 @@ function App() {
             <Route exact path={'/room'} component={room}></Route>
             <Route exact path={'/login'} component={SignIn}></Route>
             <Route path={'/setAuth'} component={SetToken}></Route>
+            <Route path={'/logout'} component={SignOut}></Route>
           </Switch>
       </Router>
     </div>

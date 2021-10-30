@@ -4,18 +4,21 @@ import Container from 'react-bootstrap/Container'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import AuthService from '../service/AuthService'
 
-  //console.log(JSON.parse(AuthService.getUser()))
+const logout = () => {
+  AuthService.logout()
+}
+const Header = () => {
   var name = AuthService.getName()
-  if (name == null) {
+  if (!name) {
      name = "login"
   }
-const Header = () => {
     return <Navbar bg="dark" variant="dark">
     <Container>
       <Navbar.Brand href="/">Peer Prep</Navbar.Brand>
       <Navbar.Toggle />
       <Navbar.Collapse className="justify-content-end">
-      <Navbar.Brand href="/login">{name}</Navbar.Brand>
+      <Navbar.Brand href="/login">{name == "null" ? "login" : name}</Navbar.Brand>
+      <Navbar.Brand href="/home" onClick={logout}>logout</Navbar.Brand>
       </Navbar.Collapse>
     </Container>
   </Navbar>

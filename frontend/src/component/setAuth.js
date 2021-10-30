@@ -13,7 +13,7 @@ const  SetToken = ()=>{
     Redirect("/")
     return (
        <div>
-           {user}
+           login successful!!
         <a href={`http://localhost:3000/`}>home</a>
         </div>
     )
