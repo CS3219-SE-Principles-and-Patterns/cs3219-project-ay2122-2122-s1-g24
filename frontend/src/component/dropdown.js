@@ -7,7 +7,12 @@ import axios from "axios";
 let qn = "pick a difficulty"
 var DropDownMenu = () => {
     const matchMake = ()=> {
-         
+        const a = axios.get("http://localhost:8080/matchMake",{
+        params: {
+            "difficulty" :{qn}
+        }}
+        );
+
     }
     return (
         <Container fluid style = {{marginTop : "20px"}}>
