@@ -11,6 +11,7 @@ interface Config {
   mongodb: MongoDBConfig;
   oAuthGoogle: OAuthGoogleConfig;
   jwtSecret: string;
+  frontendURL: string;
 }
 
 const config = (): Config => ({
@@ -28,6 +29,7 @@ const config = (): Config => ({
     callbackURL: process.env.OAUTH_GOOGLE_REDIRECT_URL,
   },
   jwtSecret: process.env.JWT_SECRET,
+  frontendURL: process.env.FRONTEND_URL || 'http://localhost:3000',
 });
 
 export default config;
