@@ -3,7 +3,6 @@ import { ConfigService } from '@nestjs/config';
 import AuthService from './auth.service';
 import GoogleOAuthGuard from './google/google-oauth.guard';
 
-
 @Controller()
 export default class AuthController {
   private readonly frontendURL: string;

@@ -10,10 +10,14 @@ import * as Automerge from 'automerge';
 import RoomsRepository from './rooms.repository';
 import AuthService from '../auth/auth.service';
 
-@WebSocketGateway()
+@WebSocketGateway({
+  namespace: 'rooms',
+  transports: ['websocket'],
+  cors: true,
+})
 export default class RoomsGateway {
   public constructor(
-    private roomRepo: RoomsRepository,
+    private roomRepository: RoomsRepository,
     private authService: AuthService,
   ) {}
 
@@ -30,7 +34,7 @@ export default class RoomsGateway {
       this.authService.verify(token);
 
       // TODO: Retrieve document contents from database (or request history from other user)
-      const roomDetails = await this.roomRepo.getRoomDetails(room);
+      const roomDetails = await this.roomRepository.getRoomDetails(room);
       if (roomDetails) {
         client.join(room);
 
@@ -56,6 +60,20 @@ export default class RoomsGateway {
       // TODO: Test if this causes duplicate changes in the sender
       // If it does, then need to try and use the sync methods instead
       this.server.to(room).emit('docUpdate', changes);
+    } catch (err) {
+      return err;
+    }
+  }
+
+  @SubscribeMessage('endSession')
+  async handleEnd(
+    @ConnectedSocket() client: Socket,
+    @MessageBody('auth') token,
+    @MessageBody('room') room: string,
+  ) {
+    try {
+      this.authService.verify(token);
+      this.server.to(room).emit('end');
     } catch (err) {
       return err;
     }

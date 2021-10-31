@@ -1,7 +1,9 @@
 import {
   ConnectedSocket,
   MessageBody,
+  OnGatewayConnection,
   OnGatewayDisconnect,
+  OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
@@ -9,21 +11,30 @@ import {
 import { Server, Socket } from 'socket.io';
 import MatchesRepository from './matches.repository';
 import { Difficulty } from '../questions/questions.const';
-import { JwtService } from '@nestjs/jwt';
+import RoomsRepository from 'rooms/rooms.repository';
+import QuestionsRepository from 'questions/questions.repository';
+import { isEmpty } from 'lodash';
+import AuthService from 'auth/auth.service';
 
-@WebSocketGateway()
-export class MatchmakingGateway implements OnGatewayDisconnect {
+@WebSocketGateway({
+  namespace: 'matchmaking',
+  transports: ['websocket'],
+  cors: true,
+})
+export default class MatchmakingGateway implements OnGatewayDisconnect {
   public constructor(
-    private matchRepo: MatchesRepository,
-    private readonly jwtService: JwtService,
+    private matchRepository: MatchesRepository,
+    private readonly authService: AuthService,
+    private roomRepository: RoomsRepository,
+    private questionRepository: QuestionsRepository,
   ) {}
 
   @WebSocketServer()
   server: Server;
 
   async handleDisconnect(client: Socket) {
-    // Remove the user from any queue it might ccurrently be in
-    await this.matchRepo.removeUser(client.id);
+    // Remove the user from any queue it might currently be in
+    await this.matchRepository.removeUser(client.id);
   }
 
   /**
@@ -43,21 +54,35 @@ export class MatchmakingGateway implements OnGatewayDisconnect {
   ) {
     // Call some method from matchmaking service here
     try {
-      const user = this.jwtService.verify(token);
+      const user = this.authService.verify(token);
+      console.log(user);
+      if (isEmpty(diff))
+        throw new Error('"difficulty" is a required parameter');
 
-      const match = await this.matchRepo.find(diff);
+      const isValidDifficulty: boolean =
+        Object.values(Difficulty).includes(diff);
+
+      if (!isValidDifficulty)
+        throw new Error(`${diff} is not a valid difficulty`);
+
+      const match = await this.matchRepository.find(diff);
       if (match && this.server.sockets[match.socketId]) {
-        const room = 'room';
+        const question = await this.questionRepository.find(diff);
+        const room = await this.roomRepository.createRoom(
+          [user.sub, match.user],
+          question,
+        );
+
         client.emit('assignRoom', room);
         this.emitRoomToUser(match.socketId, room);
 
         return;
       }
 
-      this.matchRepo.addUser(user.sub, client.id, diff);
+      this.matchRepository.addUser(user.sub, client.id, diff);
       client.emit('noMatch');
     } catch (err) {
-      // Invalid JWT
+      // Invalid JWT or difficulty
       return err;
     }
   }

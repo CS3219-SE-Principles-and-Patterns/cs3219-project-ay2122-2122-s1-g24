@@ -13,6 +13,6 @@ import { Room, RoomSchema } from './rooms.schema';
     AuthModule,
   ],
   providers: [RoomsGateway, RoomsRepository],
-  exports: [RoomsGateway],
+  exports: [RoomsRepository],
 })
 export default class RoomsModule {}

@@ -12,22 +12,22 @@ let difficulty = "pick a difficulty"
 
 var DropDownMenu = () => {
     const history = useHistory();
-    const {token} =  useAuth();
-    const socket = io('http://localhost:8080/matchmaking');
-    const matchMake = ()=> {
-       
+    const { token } = useAuth();
+    const socket = io('http://localhost:8080/matchmaking', { transports: ['websocket'] });
+    const matchMake = () => {
+        console.log('matchmaking');
         socket.emit('findMatch', {
             "difficulty" : difficulty,
             "auth" : token
         }, (response) => {
             console.log(response.status); 
-          })
- 
+        });
+    };
 
-    }
     socket.on('assignRoom', (match) => {
         history.push(`room/${match["roomId"]}`)
-    })
+    });
+
     return (
         <Container fluid style = {{marginTop : "20px"}}>
             <div className = {style.header}>
@@ -45,6 +45,6 @@ var DropDownMenu = () => {
             </Dropdown>
             <Button variant="primary" onClick={matchMake}>Find a match</Button>{' '}
         </Container>
-    )
+    );
 }
 export default DropDownMenu;
