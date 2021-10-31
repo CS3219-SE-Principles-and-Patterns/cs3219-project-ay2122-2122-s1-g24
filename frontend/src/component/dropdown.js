@@ -1,18 +1,24 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import style from './dropdown.css'
 import Dropdown from 'react-bootstrap/Dropdown'
-import axios from "axios";
-let qn = "pick a difficulty"
+import { AuthProvider, useAuth } from  "../context/AuthContext";
+import Button from 'react-bootstrap/Button'
+import io from "socket.io-client";
+let difficulty = "pick a difficulty"
 var DropDownMenu = () => {
+    const {token} =  useAuth();
     const matchMake = ()=> {
-        const a = axios.get("http://localhost:8080/matchMake",{
-        params: {
-            "difficulty" :{qn}
-        }}
-        );
+        const socket = io('http://localhost:8080/matchMake');
+        socket.emit('findMatch', {
+            "difficulty" : difficulty,
+            "auth" : token
+        }) 
 
+        socket.on('assignRoom', (match) => {
+            Redirect(`room/${match["roomId"]}`)
+        })
     }
     return (
         <Container fluid style = {{marginTop : "20px"}}>
@@ -21,15 +27,15 @@ var DropDownMenu = () => {
             </div>
             <Dropdown>
                 <Dropdown.Toggle variant="transparent" id="dropdown-basic">
-                    {qn}
+                    {difficulty}
                 </Dropdown.Toggle>
             <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1" onClick={()=> {qn = "Easy"}} >Easy</Dropdown.Item>
-                <Dropdown.Item href="#/action-2" onClick={()=> {qn = "Medium"}}>Medium</Dropdown.Item>
-                <Dropdown.Item href="#/action-3" onClick={()=> {qn = "Hard"}}>Hard</Dropdown.Item>
+                <Dropdown.Item href="#/action-1" onClick={()=> {difficulty = "Easy"}} >Easy</Dropdown.Item>
+                <Dropdown.Item href="#/action-2" onClick={()=> {difficulty = "Medium"}}>Medium</Dropdown.Item>
+                <Dropdown.Item href="#/action-3" onClick={()=> {difficulty = "Hard"}}>Hard</Dropdown.Item>
             </Dropdown.Menu>
             </Dropdown>
-            <Link to="/room" className="btn btn-primary">Find a match</Link>
+            <Button variant="primary" onClick={matchMake}>Find a match</Button>{' '}
         </Container>
     )
 }
