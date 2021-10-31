@@ -12,6 +12,8 @@ import { Difficulty } from '../questions/questions.const';
 import { JwtService } from '@nestjs/jwt';
 import RoomsRepository from 'rooms/rooms.repository';
 import QuestionsRepository from 'questions/questions.repository';
+import { isEmpty } from 'lodash';
+import { BadRequestException } from '@nestjs/common';
 
 @WebSocketGateway({ namespace: 'matchmaking' })
 export class MatchmakingGateway implements OnGatewayDisconnect {
@@ -45,9 +47,16 @@ export class MatchmakingGateway implements OnGatewayDisconnect {
     @MessageBody('difficulty') diff: Difficulty,
     @MessageBody('auth') token,
   ) {
-    // Call some method from matchmaking service here
     try {
       const user = this.jwtService.verify(token);
+      if (isEmpty(diff))
+        throw new BadRequestException('"difficulty" is a required parameter');
+
+      const isValidDifficulty: boolean =
+        Object.values(Difficulty).includes(diff);
+
+      if (!isValidDifficulty)
+        throw new BadRequestException(`${diff} is not a valid difficulty`);
 
       const match = await this.matchRepo.find(diff);
       if (match && this.server.sockets[match.socketId]) {
@@ -62,7 +71,6 @@ export class MatchmakingGateway implements OnGatewayDisconnect {
 
         return;
       }
-
       this.matchRepo.addUser(user.sub, client.id, diff);
       client.emit('noMatch');
     } catch (err) {
