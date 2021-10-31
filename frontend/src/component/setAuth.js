@@ -10,12 +10,9 @@ const  SetToken = ()=>{
     const token = query["accessToken"]
     console.log(query)
     AuthService.login(user, token);
-    Redirect("/")
+
     return (
-       <div>
-           login successful!!
-        <a href={`http://localhost:3000/`}>home</a>
-        </div>
+        Redirect("/")
     )
 }
 export default SetToken

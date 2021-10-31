@@ -8,7 +8,7 @@ const logout = () => {
   AuthService.logout()
 }
 const Header = () => {
-  var name = AuthService.getName()
+  var name = JSON.parse(AuthService.getName())
   if (!name) {
      name = "login"
   }
