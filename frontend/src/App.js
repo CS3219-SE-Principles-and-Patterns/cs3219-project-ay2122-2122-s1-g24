@@ -12,24 +12,23 @@ import Header from './component/navbar';
 import SignIn from './component/signin';
 import SetToken from './component/setAuth';
 import SignOut from './component/logout'
-
+import {useAuth} from './context/AuthContext'
 
 const PeerPrepContext = React.createContext();
- const initialState = { user: { name: 'login' }, token: "", question: "" };
+ 
 
 function App() {
-  const [token, setToken] = useState();
-  const [user, setUser] = useState();
- 
+
+  const {login, loggedIn, logout,user,token}= useAuth()
   return (
     <div>
       <Header />
       <Router>
           <Switch>
-            <Route exact path={'/'} user={user} component={homepage}></Route>
+            <Route exact path={'/'} useAuth={useAuth}component={homepage}></Route>
             <Route exact path={'/room'} component={room}></Route>
             <Route exact path={'/login'} component={SignIn}></Route>
-            <Route path={'/setAuth'} component={SetToken}></Route>
+            <Route path={'/setAuth'} login={login} loggedIn={loggedIn} logout={logout} user={user} token={token} component={SetToken}></Route>
             <Route path={'/logout'} component={SignOut}></Route>
           </Switch>
       </Router>

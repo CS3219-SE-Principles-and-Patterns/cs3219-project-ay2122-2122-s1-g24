@@ -1,14 +1,18 @@
 import React, { useState }  from 'react';
 import ReactDOM from 'react-dom';   
 import Dropdown from 'react-bootstrap/Dropdown'
-import AuthService from '../service/AuthService'
 import DropDownMenu from './dropdown' 
+import { AuthProvider, useAuth } from  "../context/AuthContext";
+
 const difficulty = "Pick a difficulty";  
+
 const Homepage = () => {
-    var name = AuthService.getToken()
-    console.log(name);
+    const {login,loggedIn,logout,user,token} =  useAuth();
+
     return (
         <div>
+            {user}
+            {token}
         <DropDownMenu />
         </div>
     )

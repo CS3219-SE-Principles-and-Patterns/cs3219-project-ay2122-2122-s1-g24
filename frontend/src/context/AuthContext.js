@@ -1,33 +1,34 @@
-import React from "react";
-import {createContext, useEffect, useState} from "react";
+import React, { createContext, useState, useEffect } from "react";
 
-const Context = createContext({});
+
+const AuthContext = createContext({});
 
 const AuthProvider = (props) => {
-    const [loggedIn, setLoggedIn] = useState(false);
-    const [user, setUser] = useState("");
-    const [token, setToken] = useState("");
-    const values = {};
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [user, setUser] = useState();
+  const [token, setToken] = useState()
 
-    const login = (newUser, newToken) => {
-        setUser(newUser);
-        setLoggedIn(true);
-        setToken(newToken);
-    };
-    
-      const logout = () => {
-        setLoggedIn(false);
-        setUser();
-        setToken();
-      };
-      const authValues = {
-        login,
-        loggedIn,
-        logout,
-        user,
-        token
-      };
-    return <Context.Provider value= { authValues} {...props} />
-}
-const useAuth = () => React.useContext(Context);
-export default { AuthProvider, useAuth };
+
+ const login = (newUser, newToken) => {
+    setUser(newUser);
+    setToken(newToken);
+    setLoggedIn(true);
+  };
+
+  const logout = () => {
+
+    setUser("nummy");
+    setToken("");
+    setLoggedIn(false);
+  };
+
+  const authContextValue = {
+   login, loggedIn, logout,user,token
+  };
+
+  return <AuthContext.Provider value={authContextValue} {...props} />;
+};
+
+const useAuth = () => React.useContext(AuthContext);
+
+export  {useAuth, AuthProvider};
