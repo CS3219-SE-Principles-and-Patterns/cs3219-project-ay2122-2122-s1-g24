@@ -13,6 +13,10 @@ import SignIn from './component/signin';
 import SetToken from './component/setAuth';
 import SignOut from './component/logout'
 
+
+const PeerPrepContext = React.createContext();
+ const initialState = { user: { name: 'login' }, token: "", question: "" };
+
 function App() {
   const [token, setToken] = useState();
   const [user, setUser] = useState();

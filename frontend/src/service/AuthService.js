@@ -1,4 +1,3 @@
-
 class AuthService {
     login(user, token) {
         const parsedUser = JSON.parse(user);
@@ -6,13 +5,11 @@ class AuthService {
         localStorage.setItem("name", JSON.stringify(parsedUser['name']));
         localStorage.setItem("token", JSON.stringify(token));
     }
-
     logout() {
         localStorage.clear("picture");
         localStorage.clear("name");
         localStorage.clear("token");
     }
-
     getName() {
         return JSON.stringify(localStorage.getItem("name"));
     }

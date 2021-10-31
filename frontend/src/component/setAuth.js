@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
 import AuthService from '../service/AuthService'
-
+import useAuth from '../context/AuthContext'
 import { useParams, Redirect } from "react-router-dom";
 
 const queryString = require('query-string');
+
 const  SetToken = ()=>{
+    const {login, loggedIn, logout,user,token}= useAuth()
     const query = queryString.parse( window.location.search);
-    const user = query["user"]
-    const token = query["accessToken"]
-    console.log(query)
-    AuthService.login(user, token);
-    Redirect("/")
+    const newUser = query["user"]
+    const newToken = query["accessToken"]
+    login(newUser, newToken)
     return (
-       <div>
-           login successful!!
-        <a href={`http://localhost:3000/`}>home</a>
-        </div>
+        <Redirect to="/" />
     )
 }
 export default SetToken
