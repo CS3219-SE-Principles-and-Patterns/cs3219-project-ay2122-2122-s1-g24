@@ -13,7 +13,7 @@ let difficulty = "pick a difficulty"
 var DropDownMenu = () => {
     const history = useHistory();
     const {token} =  useAuth();
-    const socket = io('http://localhost:8080/matchMake');
+    const socket = io('http://localhost:8080/matchmaking');
     const matchMake = ()=> {
        
         socket.emit('findMatch', {
