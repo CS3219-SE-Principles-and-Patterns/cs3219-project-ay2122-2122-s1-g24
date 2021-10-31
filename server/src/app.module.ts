@@ -6,6 +6,7 @@ import config from './config';
 import MongooseConfigService from './config/mongoose.config';
 import MatchmakingModule from './matchmaking/matchmaking.module';
 import QuestionsModule from './questions/questions.module';
+import RoomsModule from 'rooms/rooms.module';
 
 @Module({
   imports: [
@@ -17,6 +18,8 @@ import QuestionsModule from './questions/questions.module';
     AuthModule,
     MatchmakingModule,
     QuestionsModule,
+    RoomsModule,
   ],
+  providers: [],
 })
 export default class AppModule {}

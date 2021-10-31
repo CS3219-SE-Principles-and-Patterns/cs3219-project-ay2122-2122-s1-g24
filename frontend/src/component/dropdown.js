@@ -13,17 +13,21 @@ let difficulty = "pick a difficulty"
 var DropDownMenu = () => {
     const history = useHistory();
     const {token} =  useAuth();
+    const socket = io('http://localhost:8080/matchMake');
     const matchMake = ()=> {
-        const socket = io('http://localhost:8080/matchMake');
+       
         socket.emit('findMatch', {
             "difficulty" : difficulty,
             "auth" : token
-        }) 
+        }, (response) => {
+            console.log(response.status); 
+          })
  
-        socket.on('assignRoom', (match) => {
-            history.push(`room/${match["roomId"]}`)
-        })
+
     }
+    socket.on('assignRoom', (match) => {
+        history.push(`room/${match["roomId"]}`)
+    })
     return (
         <Container fluid style = {{marginTop : "20px"}}>
             <div className = {style.header}>
@@ -34,9 +38,9 @@ var DropDownMenu = () => {
                     {difficulty}
                 </Dropdown.Toggle>
             <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1" onClick={()=> {difficulty = "Easy"}} >Easy</Dropdown.Item>
-                <Dropdown.Item href="#/action-2" onClick={()=> {difficulty = "Medium"}}>Medium</Dropdown.Item>
-                <Dropdown.Item href="#/action-3" onClick={()=> {difficulty = "Hard"}}>Hard</Dropdown.Item>
+                <Dropdown.Item href="#/easy" onClick={()=> {difficulty = "Easy"}} >Easy</Dropdown.Item>
+                <Dropdown.Item href="#/medium" onClick={()=> {difficulty = "Medium"}}>Medium</Dropdown.Item>
+                <Dropdown.Item href="#/hard" onClick={()=> {difficulty = "Hard"}}>Hard</Dropdown.Item>
             </Dropdown.Menu>
             </Dropdown>
             <Button variant="primary" onClick={matchMake}>Find a match</Button>{' '}
