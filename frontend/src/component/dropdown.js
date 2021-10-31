@@ -6,8 +6,12 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import { AuthProvider, useAuth } from  "../context/AuthContext";
 import Button from 'react-bootstrap/Button'
 import io from "socket.io-client";
+import { useHistory } from 'react-router-dom';
+
 let difficulty = "pick a difficulty"
+
 var DropDownMenu = () => {
+    const history = useHistory();
     const {token} =  useAuth();
     const matchMake = ()=> {
         const socket = io('http://localhost:8080/matchMake');
@@ -15,9 +19,9 @@ var DropDownMenu = () => {
             "difficulty" : difficulty,
             "auth" : token
         }) 
-
+ 
         socket.on('assignRoom', (match) => {
-            Redirect(`room/${match["roomId"]}`)
+            history.push(`room/${match["roomId"]}`)
         })
     }
     return (
