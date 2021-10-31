@@ -17,7 +17,7 @@ const AuthProvider = (props) => {
 
   const logout = () => {
 
-    setUser("nummy");
+    setUser("");
     setToken("");
     setLoggedIn(false);
   };

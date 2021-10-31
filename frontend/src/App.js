@@ -22,8 +22,9 @@ function App() {
   const {login, loggedIn, logout,user,token}= useAuth()
   return (
     <div>
-      <Header />
+
       <Router>
+      <Header />
           <Switch>
             <Route exact path={'/'} useAuth={useAuth}component={homepage}></Route>
             <Route exact path={'/room'} component={room}></Route>

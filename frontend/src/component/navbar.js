@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container'
 import 'bootstrap/dist/css/bootstrap.min.css'
 //import AuthService from '../service/AuthService'
 import { AuthProvider, useAuth } from  "../context/AuthContext";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link} from "react-router-dom";
 
 const Header = () => {
   const {login,loggedIn,logout,user,token} =  useAuth();
@@ -12,7 +12,7 @@ const Header = () => {
 
     return <Navbar bg="dark" variant="dark">
     <Container>
-      <Navbar.Brand href="/">Peer Prep</Navbar.Brand>
+      <Link to="/">Prep Prep</Link>
       <Navbar.Toggle />
       <Navbar.Collapse className="justify-content-end">
       <Navbar.Brand href="/login">login</Navbar.Brand>
