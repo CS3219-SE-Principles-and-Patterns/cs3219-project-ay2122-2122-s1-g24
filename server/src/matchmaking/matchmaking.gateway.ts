@@ -50,13 +50,13 @@ export class MatchmakingGateway implements OnGatewayDisconnect {
     try {
       const user = this.jwtService.verify(token);
       if (isEmpty(diff))
-        throw new BadRequestException('"difficulty" is a required parameter');
+        throw new Error('"difficulty" is a required parameter');
 
       const isValidDifficulty: boolean =
         Object.values(Difficulty).includes(diff);
 
       if (!isValidDifficulty)
-        throw new BadRequestException(`${diff} is not a valid difficulty`);
+        throw new Error(`${diff} is not a valid difficulty`);
 
       const match = await this.matchRepo.find(diff);
       if (match && this.server.sockets[match.socketId]) {
@@ -74,7 +74,7 @@ export class MatchmakingGateway implements OnGatewayDisconnect {
       this.matchRepo.addUser(user.sub, client.id, diff);
       client.emit('noMatch');
     } catch (err) {
-      // Invalid JWT
+      // Invalid JWT or difficulty
       return err;
     }
   }
