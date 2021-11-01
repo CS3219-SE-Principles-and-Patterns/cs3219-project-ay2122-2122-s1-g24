@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AuthService from "../service/AuthService"
 
 const SignOut= () => {

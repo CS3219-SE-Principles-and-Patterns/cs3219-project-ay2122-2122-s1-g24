@@ -1,19 +1,17 @@
 import {
   ConnectedSocket,
   MessageBody,
-  OnGatewayConnection,
   OnGatewayDisconnect,
-  OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
+import isEmpty from 'lodash/isEmpty';
 import { Server, Socket } from 'socket.io';
 import MatchesRepository from './matches.repository';
 import { Difficulty } from '../questions/questions.const';
 import RoomsRepository from 'rooms/rooms.repository';
 import QuestionsRepository from 'questions/questions.repository';
-import { isEmpty } from 'lodash';
 import AuthService from 'auth/auth.service';
 
 @WebSocketGateway({
@@ -37,15 +35,6 @@ export default class MatchmakingGateway implements OnGatewayDisconnect {
     await this.matchRepository.removeUser(client.id);
   }
 
-  /**
-   * Sends the room ID to the user connected to this socket.
-   * @param room The ID of the room the user should connect to.
-   * @param socket The socket the user to send is connected to.
-   */
-  async emitRoomToUser(room: string, socket: string) {
-    this.server.to(socket).emit('assignRoom', room);
-  }
-
   @SubscribeMessage('findMatch')
   async handleMatch(
     @ConnectedSocket() client: Socket,
@@ -66,7 +55,7 @@ export default class MatchmakingGateway implements OnGatewayDisconnect {
         throw new Error(`${diff} is not a valid difficulty`);
 
       const match = await this.matchRepository.find(diff);
-      if (match && this.server.sockets[match.socketId]) {
+      if (match) {
         const question = await this.questionRepository.find(diff);
         const room = await this.roomRepository.createRoom(
           [user.sub, match.user],
@@ -74,16 +63,20 @@ export default class MatchmakingGateway implements OnGatewayDisconnect {
         );
 
         client.emit('assignRoom', room);
-        this.emitRoomToUser(match.socketId, room);
+        client.to(match.socketId).emit('assignRoom', room);
+        this.server.socketsLeave(match.socketId);
 
-        return;
+        return { ok: true };
       }
 
       this.matchRepository.addUser(user.sub, client.id, diff);
+      client.join(client.id);
       client.emit('noMatch');
+
+      return { ok: true };
     } catch (err) {
       // Invalid JWT or difficulty
-      return err;
+      return { err: err.message };
     }
   }
 }
