@@ -8,6 +8,13 @@ const DEFAULT_VALUE = '// Enter code here'
 
 const CodeEnv = () => {
     const [ code, setCode ] = useState(DEFAULT_VALUE);
+    setCodeValue((value) => {
+        setCode(value);
+        socket.emit('coding event', {
+            room: this.props.challenge.id,
+            newCode: newText
+        })
+    });
     return (
         <CodeMirror
                 value= { code }
@@ -17,7 +24,7 @@ const CodeEnv = () => {
                     lineNumbers: true
                 }}
                 onChange={(editor, data, value) => {
-                    setCode(value);
+                    setCodeValue(value);
                 }}
         />
     )
