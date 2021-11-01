@@ -21,11 +21,16 @@ var DropDownMenu = () => {
 
     const matchMake = () => {
         socket.emit('findMatch', {
-            "difficulty" : "wrong stuff", 
+            "difficulty" : difficulty, 
             "auth" : token
         }, (response) => {
-            console.log(response);
+            if (response.err) {
+                alert("error");
+            }
         });
+        socket.on('assignRoom' , (match) => {
+            history.push("/room/" + match)
+        })
     };
 
 
