@@ -32,14 +32,16 @@ export default class MatchmakingController {
       const isValidDifficulty: boolean =
         Object.values(Difficulty).includes(difficulty);
 
-      if (!isValidDifficulty)
+      if (!isValidDifficulty) {
         throw new BadRequestException(
           `${difficulty} is not a valid difficulty`,
         );
 
+      }
       const question: Question = await this.questionsRepository.find(
         difficulty,
       );
+
 
       return { question };
     } catch (err) {
