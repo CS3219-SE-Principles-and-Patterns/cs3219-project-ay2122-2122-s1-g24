@@ -5,7 +5,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import {useAuth } from  "../context/AuthContext";
 import Button from 'react-bootstrap/Button'
 import io from "socket.io-client";
-import { useHistory, Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 let difficulty = "pick a difficulty"
 

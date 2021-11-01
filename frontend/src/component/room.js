@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from  "../context/AuthContext";
 import io from "socket.io-client";
 import CodeEnv from './codeEnv';
@@ -6,7 +6,10 @@ import Question from './question';
 import PartnerInfo from './partnerInfo';
 
 const Room = (props) => {
-    let questionTitle, questionDesc, names;
+    const [ questionTitle, setQuestionTitle ] = useState();
+    const [ questionDesc, setQuestionDesc ] = useState();
+    const [ names, setNames ] = useState();
+
     const id = props.match.params.id;
     const { token } =  useAuth();
     const socket = io('ws://localhost:8080/rooms', { transports: ['websocket'] });
@@ -14,9 +17,9 @@ const Room = (props) => {
     useEffect(() => {
         socket.emit('joinRoom', {auth: token, room: id}, roomDetails => {
             if(roomDetails === undefined) return;
-            questionTitle = roomDetails.questionTitle;
-            questionDesc = roomDetails.questionDesc;
-            names = roomDetails.users;
+            setQuestionTitle(roomDetails.questionTitle);
+            setQuestionDesc(roomDetails.questionDesc);
+            setNames(roomDetails.users);
         });
 
         return function cleanup() {
@@ -28,7 +31,7 @@ const Room = (props) => {
         <div>
             <PartnerInfo names = { names } />
             <Question questionTitle = { questionTitle } questionDesc = { questionDesc } />
-            <CodeEnv id={id} socket={socket} />
+            <CodeEnv id = { id } socket = { socket } />
         </div>
     )
 }
