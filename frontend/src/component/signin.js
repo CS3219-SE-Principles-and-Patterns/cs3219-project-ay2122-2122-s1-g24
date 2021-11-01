@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import axios from "axios";
-import GoogleLogin from "react-google-login"
+import React from 'react';
 
 const SignIn= (props) => {
     return (

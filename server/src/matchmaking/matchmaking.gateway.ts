@@ -56,6 +56,7 @@ export default class MatchmakingGateway implements OnGatewayDisconnect {
     try {
       const user = this.authService.verify(token);
       console.log(user);
+      console.log(diff)
       if (isEmpty(diff))
         throw new Error('"difficulty" is a required parameter');
 

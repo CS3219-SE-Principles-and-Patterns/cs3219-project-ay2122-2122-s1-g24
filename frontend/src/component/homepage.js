@@ -1,12 +1,9 @@
-import React, { useState }  from 'react';
-import ReactDOM from 'react-dom';   
-import Dropdown from 'react-bootstrap/Dropdown'
+import React from 'react';
 import DropDownMenu from './dropdown' 
-import { AuthProvider, useAuth } from  "../context/AuthContext";
 
-const difficulty = "Pick a difficulty";  
 
-const Homepage = ({login, loggedIn, logout,user,token}) => {
+
+const Homepage = () => {
     return (
         <div>
         <DropDownMenu />

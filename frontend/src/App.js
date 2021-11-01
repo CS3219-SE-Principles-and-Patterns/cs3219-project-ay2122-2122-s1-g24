@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router, 
   Switch,
@@ -13,26 +13,24 @@ import SetToken from './component/setAuth';
 import SignOut from './component/logout'
 import {useAuth} from './context/AuthContext'
 
-const PeerPrepContext = React.createContext();
  
-
 function App() {
 
-  const {login, loggedIn, logout,user,token}= useAuth()
-  return (
-    <div>
+    const {login, loggedIn, logout,user,token}= useAuth()
+    return (
+      <div>
 
-      <Router>
-      <Header />
-          <Switch>
-            <Route exact path={'/'} useAuth={useAuth}component={homepage}></Route>
-            <Route exact path={'/room/:id'} component={room}></Route>
-            <Route exact path={'/login'} component={SignIn}></Route>
-            <Route path={'/setAuth'} login={login} loggedIn={loggedIn} logout={logout} user={user} token={token} component={SetToken}></Route>
-            <Route path={'/logout'} component={SignOut}></Route>
-          </Switch>
-      </Router>
-    </div>
-  );
-  }
+        <Router>
+        <Header />
+            <Switch>
+              <Route exact path={'/'} useAuth={useAuth}component={homepage}></Route>
+              <Route exact path={'/room/:id'} component={room}></Route>
+              <Route exact path={'/login'} component={SignIn}></Route>
+              <Route path={'/setAuth'} login={login} loggedIn={loggedIn} logout={logout} user={user} token={token} component={SetToken}></Route>
+              <Route path={'/logout'} component={SignOut}></Route>
+            </Switch>
+        </Router>
+      </div>
+    );
+}
 export default App;
