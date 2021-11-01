@@ -14,8 +14,6 @@ var DropDownMenu = () => {
     const { token } = useAuth();
     const socket = io('http://localhost:8080/matchmaking', { transports: ['websocket'] });
 
-
-
     const matchMake = () => {
         socket.emit('findMatch', {
             "difficulty" : difficulty, 
@@ -26,7 +24,7 @@ var DropDownMenu = () => {
             }
         });
         socket.on('assignRoom' , (match) => {
-            history.push("/room/" + match)
+            history.push(`/room/${match}`)
         })
     };
     return (
