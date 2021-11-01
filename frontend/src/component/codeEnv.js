@@ -8,16 +8,15 @@ import 'codemirror/mode/clike/clike.js'
 
 const DEFAULT_VALUE = '// Enter code here'
 
-const CodeEnv = (props) => {
+const CodeEnv = ({ id, socket }) => {
     const [ code, setCode ] = useState(DEFAULT_VALUE);
 
-    const socket = io('https://localhost:8080/rooms');
     const {token} =  useAuth();
 
     const setCodeValue = (value) => {
         setCode(value);
-        socket.emit('update', {auth: token, room: props.id}, {
-            room: props.id,
+        socket.emit('update', {auth: token, room: id}, {
+            room: id,
             newCode: value
         });
     }

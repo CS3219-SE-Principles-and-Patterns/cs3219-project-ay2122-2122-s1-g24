@@ -8,24 +8,27 @@ import PartnerInfo from './partnerInfo';
 const Room = (props) => {
     let questionTitle, questionDesc, names;
     const id = props.match.params.id;
-    const socket = io('https://localhost:8080/rooms', { transports: ['websocket'] });
     const { token } =  useAuth();
-    socket.emit('joinRoom', {auth: token, room: id}, roomDetails => {
-        if(roomDetails === undefined) return;
-        questionTitle = roomDetails.questionTitle;
-        questionDesc = roomDetails.questionDesc;
-        names = roomDetails.users;
-    });
+    const socket = io('ws://localhost:8080/rooms', { transports: ['websocket'] });
+
     useEffect(() => {
+        socket.emit('joinRoom', {auth: token, room: id}, roomDetails => {
+            if(roomDetails === undefined) return;
+            questionTitle = roomDetails.questionTitle;
+            questionDesc = roomDetails.questionDesc;
+            names = roomDetails.users;
+        });
+
         return function cleanup() {
             socket.emit("endSession", {auth: token, room: id});
         };
-    });
+    }, []);
+
     return (
         <div>
             <PartnerInfo names = { names } />
             <Question questionTitle = { questionTitle } questionDesc = { questionDesc } />
-            <CodeEnv id = { id } />
+            <CodeEnv id={id} socket={socket} />
         </div>
     )
 }

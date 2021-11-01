@@ -12,11 +12,11 @@ let difficulty = "pick a difficulty"
 var DropDownMenu = () => {
     const history = useHistory();
     const { token } = useAuth();
-    const socket = io('http://localhost:8080/matchmaking', { transports: ['websocket'] });
+    const socket = io('ws://localhost:8080/matchmaking', { transports: ['websocket'] });
 
     socket.on('assignRoom' , match => {
         console.log(match);
-        history.push("/room/id");
+        history.push(`/room/${match}`);
     });
 
     const matchMake = () => {

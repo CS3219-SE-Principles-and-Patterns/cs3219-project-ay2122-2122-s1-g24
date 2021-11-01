@@ -44,7 +44,7 @@ export default class MatchmakingGateway implements OnGatewayDisconnect {
     // Call some method from matchmaking service here
     try {
       const user = this.authService.verify(token);
-      console.log(user);
+
       if (isEmpty(diff))
         throw new Error('"difficulty" is a required parameter');
 
