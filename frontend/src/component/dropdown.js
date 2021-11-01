@@ -14,21 +14,18 @@ var DropDownMenu = () => {
     const { token } = useAuth();
     const socket = io('http://localhost:8080/matchmaking', { transports: ['websocket'] });
 
-    socket.on('assignRoom' , match => {
-        console.log(match);
-        history.push("/room/id");
-    });
+
 
     const matchMake = () => {
         socket.emit('findMatch', {
-            "difficulty" : "wrong stuff", 
+            "difficulty" : difficulty, 
             "auth" : token
         }, (response) => {
-            history.push("/room/id")
+
             console.log(response);
         });
-        socket.on('assignRoom' , match => {
-            console.log("match: " + match)
+        socket.on('assignRoom' , (match) => {
+            history.push("/room/" + match)
         })
     };
     return (
