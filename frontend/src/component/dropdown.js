@@ -18,16 +18,15 @@ var DropDownMenu = () => {
             "difficulty" : "wrong stuff", 
             "auth" : token
         }, (response) => {
+            history.push("/room/id")
             console.log(response);
         });
         socket.on('assignRoom' , match => {
+            console.log("match: " + match)
 
-            history.push("/room/id")
         })
 
     };
-
-
     return (
         <Container fluid style = {{marginTop : "20px"}}>
             <div className = {style.header}>
