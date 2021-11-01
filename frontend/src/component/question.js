@@ -3,7 +3,8 @@ import React from 'react';
 const Question = (props) => {
     return (
         <div>
-            {props.question}
+            <h1>{props.questionTitle}</h1>
+            <body>{props.questionDesc}</body>
             <h1>Two Sum</h1>
             <body>
                 <p>

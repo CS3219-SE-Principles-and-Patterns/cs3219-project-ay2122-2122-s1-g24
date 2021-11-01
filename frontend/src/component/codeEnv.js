@@ -16,7 +16,7 @@ const CodeEnv = (props) => {
 
     const setCodeValue = (value) => {
         setCode(value);
-        socket.emit('update', {
+        socket.emit('update', {auth: token, room: props.id}, {
             room: props.id,
             newCode: value
         });
