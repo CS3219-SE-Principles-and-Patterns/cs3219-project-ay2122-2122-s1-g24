@@ -12,6 +12,7 @@ import SignIn from './component/signin';
 import SetToken from './component/setAuth';
 import SignOut from './component/logout'
 import {useAuth} from './context/AuthContext'
+import {CookiesProvider} from "react-cookie"
 
  
 function App() {
@@ -19,6 +20,7 @@ function App() {
     const {login, loggedIn, logout,user,token}= useAuth()
     return (
       <div>
+        <CookiesProvider>
         <Router>
         <Header />
             <Switch>
@@ -29,6 +31,7 @@ function App() {
               <Route path={'/logout'} component={SignOut}></Route>
             </Switch>
         </Router>
+        </CookiesProvider>
       </div>
     );
 }

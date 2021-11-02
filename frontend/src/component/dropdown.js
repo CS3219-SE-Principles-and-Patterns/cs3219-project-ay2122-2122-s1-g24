@@ -2,22 +2,20 @@ import React from 'react';
 import Container from 'react-bootstrap/Container'
 import style from './dropdown.css'
 import Dropdown from 'react-bootstrap/Dropdown'
-import {useAuth } from  "../context/AuthContext";
+import {useAuth} from  "../context/AuthContext";
 import Button from 'react-bootstrap/Button'
 import io from "socket.io-client";
 import { useHistory } from 'react-router-dom';
+
+const Cookies = require("js-cookie");
 
 let difficulty = "pick a difficulty"
 
 var DropDownMenu = () => {
     const history = useHistory();
-    const { token } = useAuth();
+    const token = Cookies.get("token")
     const socket = io('ws://localhost:8080/matchmaking', { transports: ['websocket'] });
 
-    socket.on('assignRoom' , match => {
-        console.log(match);
-        history.push(`/room/${match}`);
-    });
 
     const matchMake = () => {
         socket.emit('findMatch', {
@@ -28,9 +26,10 @@ var DropDownMenu = () => {
                 alert("error");
             }
         });
-        socket.on('assignRoom' , (match) => {
-            history.push("/room/" + match)
-        })
+        socket.on('assignRoom' , match => {
+
+            history.push(`/room/${match}`);
+        });    
     };
 
 

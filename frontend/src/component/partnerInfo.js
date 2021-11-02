@@ -1,9 +1,12 @@
 import React from 'react';
 import { useAuth } from  "../context/AuthContext";
 
+const Cookies = require("js-cookie");
+
 const PartnerInfo = (props) => {
-    const { user } =  useAuth();
     
+    var user = Cookies.get("username");
+
     let partnerName = "";
     if(props.users !== undefined) {
         for (const currUser of props.users) {
@@ -15,7 +18,7 @@ const PartnerInfo = (props) => {
 
     return (
         <div>
-            <h3>You are playing with: {partnerName === "" ? "Yourself" : partnerName}</h3>
+            <h3>You are playing with: {partnerName === "" ? user : partnerName}</h3>
         </div>
     )
 }

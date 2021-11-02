@@ -5,21 +5,41 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { useAuth } from  "../context/AuthContext";
 import {Link} from "react-router-dom";
 
-const Header = () => {
-  const {logout,user} =  useAuth();
-  var name = user;
+const Cookies = require("js-cookie");
 
-    return <Navbar bg="dark" variant="dark">
+const Header = () => {
+  const {logout} =  useAuth();
+  var user = Cookies.get("username");
+  var loggedIn = Cookies.get("isLoggedIn");
+  if (loggedIn == "true") {
+
+    return (
+      <Navbar bg="dark" variant="dark">
+        <Container>
+          <Link to="/">Prep Prep</Link>
+          <Navbar.Toggle />
+          <Navbar.Collapse className="justify-content-end">
+          <Navbar.Brand >{user}</Navbar.Brand>
+          <Navbar.Brand href="/" onClick={()=> {
+            logout();
+            user = Cookies.get("username");
+            loggedIn = Cookies.get("isLoggedIn"); }}>logout</Navbar.Brand>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    )
+  }
+  return (
+    <Navbar bg="dark" variant="dark">
     <Container>
       <Link to="/">Prep Prep</Link>
       <Navbar.Toggle />
       <Navbar.Collapse className="justify-content-end">
-      <Navbar.Brand href="/login">{name}</Navbar.Brand>
-      <Navbar.Brand href="/login">login</Navbar.Brand>
-      <Navbar.Brand href="/" onClick={logout}>logout</Navbar.Brand>
+      <Navbar.Brand href="http://localhost:8080/login" >login</Navbar.Brand>
       </Navbar.Collapse>
     </Container>
-  </Navbar>
+    </Navbar>
+  )
 }
 
 export default Header;

@@ -5,13 +5,15 @@ import CodeEnv from './codeEnv';
 import Question from './question';
 import PartnerInfo from './partnerInfo';
 
+const Cookies = require("js-cookie");
+
 const Room = (props) => {
     const [ questionTitle, setQuestionTitle ] = useState();
     const [ questionDesc, setQuestionDesc ] = useState();
     const [ names, setNames ] = useState();
 
     const id = props.match.params.id;
-    const { token } =  useAuth();
+    const token = Cookies.get("token")
     const socket = io('ws://localhost:8080/rooms', { transports: ['websocket'] });
 
     useEffect(() => {
