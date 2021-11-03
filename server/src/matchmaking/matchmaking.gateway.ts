@@ -54,7 +54,7 @@ export default class MatchmakingGateway implements OnGatewayDisconnect {
       if (!isValidDifficulty)
         throw new Error(`${diff} is not a valid difficulty`);
 
-      const match = await this.matchRepository.find(diff);
+      const match = await this.matchRepository.find(diff, user.sub);
       if (match) {
         const question = await this.questionRepository.find(diff);
         const room = await this.roomRepository.createRoom(
