@@ -53,7 +53,7 @@ export default class RoomsGateway {
     @ConnectedSocket() client: Socket,
     @MessageBody('auth') token,
     @MessageBody('room') room: string,
-    @MessageBody('updates') changes: Automerge.BinaryChange[],
+    @MessageBody('updates') changes: string,
   ) {
     try {
       this.authService.verify(token);
