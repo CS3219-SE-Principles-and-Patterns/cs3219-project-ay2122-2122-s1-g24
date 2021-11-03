@@ -21,7 +21,6 @@ var DropDownMenu = () => {
     });
 
     socket.current.on('assignRoom', match => {
-      console.log(match);
       history.push(`/room/${match}`);
     });
 
