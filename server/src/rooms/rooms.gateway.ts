@@ -6,7 +6,6 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import * as Automerge from 'automerge';
 import RoomsRepository from './rooms.repository';
 import AuthService from '../auth/auth.service';
 

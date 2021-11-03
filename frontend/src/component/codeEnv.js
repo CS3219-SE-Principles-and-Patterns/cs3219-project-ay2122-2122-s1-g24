@@ -4,13 +4,11 @@ import { UnControlled as CodeMirror } from 'react-codemirror2';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/monokai.css';
 import 'codemirror/mode/clike/clike.js';
-import * as Automerge from 'automerge';
 
 const DEFAULT_VALUE = '// Enter code here';
 
 const CodeEnv = ({ id, socket }) => {
   const [code, setCode] = useState(DEFAULT_VALUE);
-  let doc = Automerge.init(DEFAULT_VALUE);
   const { token } = useAuth();
 
   const setCodeValue = value => {
