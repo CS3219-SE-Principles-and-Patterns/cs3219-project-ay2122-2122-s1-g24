@@ -32,12 +32,12 @@ const Room = (props) => {
 
     return (
         <div className='.room'>
-            {difficulty}
             <Container>
                 <PartnerInfo names = { names } />
                 <Question questionTitle = { questionTitle } questionDesc = { questionDesc } />
+ 
+                <CodeEnv id = { id } socket = { socket } />
             </Container>
-            <CodeEnv id = { id } socket = { socket } />
         </div>
     )
 }

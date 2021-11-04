@@ -26,10 +26,6 @@ var DropDownMenu = () => {
       transports: ['websocket']
     });
 
-    socket.current.on('assignRoom', match => {
-      history.push(`/room/${diff}/${match}`);
-    });
-
     return function cleanup() {
       socket.current.disconnect();
     };
@@ -44,6 +40,10 @@ var DropDownMenu = () => {
         auth: token
       }
     );
+
+    socket.current.on('assignRoom', match => {
+        history.push(`/room/${diff}/${match}`);
+      });
     setTimeout(() => {
         setLoading(false );
       }, 30000);
