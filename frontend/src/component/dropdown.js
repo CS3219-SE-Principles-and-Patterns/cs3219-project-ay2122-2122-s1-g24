@@ -52,7 +52,7 @@ var DropDownMenu = () => {
   const buttonContent = () => {
       if (loggedIn == "false") {
         return (
-        <Button variant="primary" href="http://localhost:8080/login" disabled = {loading} style={{ marginTop: "5px"}}>
+        <Button variant="primary" href="http://localhost:8080/login" disabled = {loading} style={{ marginTop: "3px"}}>
             Login
         </Button>);
       }

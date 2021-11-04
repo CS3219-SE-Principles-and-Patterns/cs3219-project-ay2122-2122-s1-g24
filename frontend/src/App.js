@@ -8,9 +8,9 @@ import {
 import homepage from './component/homepage'
 import room from './component/room'
 
-import SignIn from './component/signin';
-import SetToken from './component/setAuth';
-import SignOut from './component/logout'
+import SignIn from './component/Auth/signin';
+import SetToken from './component/Auth/setAuth';
+import SignOut from './component/Auth/logout'
 import {useAuth} from './context/AuthContext'
 import {CookiesProvider} from "react-cookie"
 import PageNotFound from './component/404Page'
