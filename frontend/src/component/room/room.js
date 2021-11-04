@@ -4,7 +4,6 @@ import CodeEnv from './codeEnv';
 import Question from './question';
 import PartnerInfo from './partnerInfo';
 import { Container } from 'react-bootstrap';
-import room from "./room"
 import { Redirect } from 'react-router-dom';
 
 const Cookies = require("js-cookie");

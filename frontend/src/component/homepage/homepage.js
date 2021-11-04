@@ -1,6 +1,6 @@
 import React from 'react';
 import DropDownMenu from './dropdown' 
-import pic from '../assets/homePagePic.jpg'
+import pic from '../../assets/homePagePic.jpg'
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'

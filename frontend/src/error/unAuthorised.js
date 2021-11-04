@@ -1,6 +1,5 @@
 import React from 'react'
 import logo from '../assets/logo2.png'
-import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container'
 const unathorised = () => {
     var link = <a href="http://localhost:8080/login">Goggle</a>;
