@@ -8,6 +8,7 @@ import Image from 'react-bootstrap/Image'
 
 const Homepage = () => {
     return (
+        <div>
         <Container>
             <Row>
                 <Col xs={5}>
@@ -18,6 +19,7 @@ const Homepage = () => {
                 </Col>
             </Row>
         </Container>
+        </div>
     )
 }
 

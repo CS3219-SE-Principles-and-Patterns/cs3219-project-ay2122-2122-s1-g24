@@ -3,7 +3,6 @@ import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useAuth } from  "../context/AuthContext";
-import {Link} from "react-router-dom";
 import logo from '../assets/logo.png'
 const Cookies = require("js-cookie");
 

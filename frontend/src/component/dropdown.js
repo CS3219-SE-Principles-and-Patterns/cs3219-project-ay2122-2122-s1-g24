@@ -66,7 +66,7 @@ var DropDownMenu = () => {
 
   return (
 
-    <Container className="justify-content-md-center" style={{ marginTop: "60px", justifyContent:"center"}}>
+    <Container style={{ marginTop: "60px", justifyContent:"center"}}>
       <div className={style.header}>
         <h1>Welcome to Peer Prep</h1>
       </div>
