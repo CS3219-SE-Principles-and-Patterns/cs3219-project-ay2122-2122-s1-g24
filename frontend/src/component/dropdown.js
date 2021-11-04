@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import style from './dropdown.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
-import {Spinner} from 'react-bootstrap'
+
 import io from 'socket.io-client';
 import { useHistory } from 'react-router-dom';
 import Loader from "react-loader-spinner";
@@ -52,12 +52,12 @@ var DropDownMenu = () => {
   const buttonContent = () => {
       if (loggedIn == "false") {
         return (
-        <Button variant="primary" href="http://localhost:8080/login" disabled = {loading} >
+        <Button variant="primary" href="http://localhost:8080/login" disabled = {loading} style={{ marginTop: "5px"}}>
             Login
         </Button>);
       }
       return (
-        <Button variant="primary" onClick={matchMake} disabled = {loading} >
+        <Button variant="primary" onClick={matchMake} disabled = {loading} style={{ marginTop: "5px"}}>
         {!loading ? <span>Find a match</span> : <Loader type="TailSpin" color="#00BFFF" height={20} width={90} />}
         </Button>
       )

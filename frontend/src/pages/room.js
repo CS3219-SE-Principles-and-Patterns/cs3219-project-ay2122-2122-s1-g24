@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import io from "socket.io-client";
-import CodeEnv from './codeEnv';
-import Question from './question';
-import PartnerInfo from './partnerInfo';
+import CodeEnv from '../component/codeEnv';
+import Question from '../component/question';
+import PartnerInfo from '../component/partnerInfo';
 import { Container } from 'react-bootstrap';
 import room from "./room"
 import { Redirect } from 'react-router-dom';
@@ -26,7 +26,6 @@ const Room = (props) => {
       setQuestionTitle(roomDetails.questionTitle);
       setQuestionDesc(roomDetails.questionDesc);
       setNames(roomDetails.users);
-      
     });
 
     return function cleanup() {

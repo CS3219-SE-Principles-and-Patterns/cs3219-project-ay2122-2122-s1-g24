@@ -3,12 +3,15 @@ import React from 'react';
 
 const Question = (props) => {
 
-    const colours= { "easy": "green", "medium": 'orange', HARD: 'red' };
-    const difficulty =  <h3 style={{ color: colours[props.questionDiff] }}>{props.questionDiff}</h3>;
+    const difficulty = props.questionDiff[0].toUpperCase() + props.questionDiff.substring(1);
+    const colours= { "easy": "green", "medium": 'orange', "hard": 'red' };
+    const difficultyText =  <h1 style={{ color: colours[props.questionDiff] }}>{difficulty}</h1>;
     return (
         <div>
+            <div  style={{ display: "flex", justifyContent: "space-between" }}>
             <h1>{props.questionTitle}</h1>
-            {difficulty}
+            {difficultyText}
+            </div>
             <div>{props.questionDesc}</div>
         </div>
     )
