@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { Controlled as Editor } from 'react-codemirror2';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/monokai.css';
@@ -53,6 +53,7 @@ const CodeEnv = ({ id, socket }) => {
       onBeforeChange={(editor, data, value) => {
         setCodeValue(data, value);
       }}
+      
     />
   );
 };

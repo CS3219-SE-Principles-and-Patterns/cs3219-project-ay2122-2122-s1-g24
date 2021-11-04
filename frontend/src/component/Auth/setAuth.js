@@ -1,12 +1,11 @@
 import React from 'react';
-import {useAuth} from '../context/AuthContext'
+import {useAuth} from '../../context/AuthContext'
 import { Redirect } from "react-router-dom";
 
 const queryString = require('query-string');
 
 const  SetToken = ()=>{
     const {login}= useAuth()
-    console.log(login);
     const query = queryString.parse( window.location.search);
     const newUser = query["user"]
     const newToken = query["accessToken"]
