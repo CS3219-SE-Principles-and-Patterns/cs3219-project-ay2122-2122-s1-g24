@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useAuth } from  "../context/AuthContext";
 import io from "socket.io-client";
 import CodeEnv from './codeEnv';
 import Question from './question';
 import PartnerInfo from './partnerInfo';
-
+import { Container } from 'react-bootstrap';
+import room from "./room"
 const Cookies = require("js-cookie");
 
 const Room = (props) => {
@@ -13,6 +13,7 @@ const Room = (props) => {
     const [ names, setNames ] = useState();
 
     const id = props.match.params.id;
+    const difficulty = props.match.params.difficulty;
     const token = Cookies.get("token")
     const socket = io('ws://localhost:8080/rooms', { transports: ['websocket'] });
 
@@ -30,9 +31,12 @@ const Room = (props) => {
     }, []);
 
     return (
-        <div>
-            <PartnerInfo names = { names } />
-            <Question questionTitle = { questionTitle } questionDesc = { questionDesc } />
+        <div className='.room'>
+            {difficulty}
+            <Container>
+                <PartnerInfo names = { names } />
+                <Question questionTitle = { questionTitle } questionDesc = { questionDesc } />
+            </Container>
             <CodeEnv id = { id } socket = { socket } />
         </div>
     )

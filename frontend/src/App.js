@@ -25,7 +25,7 @@ function App() {
         <Header />
             <Switch>
               <Route exact path={'/'} useAuth={useAuth}component={homepage}></Route>
-              <Route exact path={'/room/:id'} component={room}></Route>
+              <Route exact path={'/room/:difficulty/:id'} component={room}></Route>
               <Route exact path={'/login'} component={SignIn}></Route>
               <Route path={'/setAuth'} login={login} loggedIn={loggedIn} logout={logout} user={user} token={token} component={SetToken}></Route>
               <Route path={'/logout'} component={SignOut}></Route>

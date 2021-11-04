@@ -20,9 +20,6 @@ var DropDownMenu = () => {
   const [diff, setDiff] = useState('pick a difficulty');
   const [loading, setLoading] = useState(false);
 
-  const [width, setWidth] = React.useState(5000);
-  const [height, setHeight] = React.useState(5000);
-  const ref = React.useRef(null);
 
   useEffect(() => {
     socket.current = io('ws://localhost:8080/matchmaking', {
@@ -30,7 +27,7 @@ var DropDownMenu = () => {
     });
 
     socket.current.on('assignRoom', match => {
-      history.push(`/room/${match}`);
+      history.push(`/room/${diff}/${match}`);
     });
 
     return function cleanup() {
@@ -45,9 +42,6 @@ var DropDownMenu = () => {
       {
         difficulty: diff,
         auth: token
-      },
-      response => {
-        
       }
     );
     setTimeout(() => {
@@ -58,7 +52,7 @@ var DropDownMenu = () => {
   const buttonContent = () => {
       if (loggedIn == "false") {
         return (
-        <Button variant="primary" onClick={()=> history.push("http://localhost:8080/login")} disabled = {loading} >
+        <Button variant="primary" href="http://localhost:8080/login" disabled = {loading} >
             Login
         </Button>);
       }
@@ -78,11 +72,11 @@ var DropDownMenu = () => {
       </div>
       <Dropdown>
         <Dropdown.Toggle variant="transparent" id="dropdown-basic">
-          {diff}
+          {diff[0].toUpperCase() + diff.substring(1)}
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Dropdown.Item
-            href="#/easy"
+            href="#/Easy"
             onClick={() => {
                 setDiff(difficulties.EASY)
                 setLoading(false);
@@ -91,7 +85,7 @@ var DropDownMenu = () => {
             Easy
           </Dropdown.Item>
           <Dropdown.Item
-            href="#/medium"
+            href="#/Medium"
             onClick={() => {
                 setDiff(difficulties.MEDIUM)
                 setLoading(false);
@@ -100,7 +94,7 @@ var DropDownMenu = () => {
             Medium
           </Dropdown.Item>
           <Dropdown.Item
-            href="#/hard"
+            href="#/Hard"
             onClick={() => {
                 setDiff(difficulties.HARD)
                 setLoading(false);
