@@ -18,11 +18,6 @@ const Room = (props) => {
   const token = Cookies.get("token")
   const  loggedIn = Cookies.get("isLoggedIn");
   const socket = io('ws://localhost:8080/rooms', { transports: ['websocket'] });
-  const codemirrorRef = React.useRef();
-
-  React.useEffect(() => {
-    const current = codemirrorRef.current.editor.display.wrapper.style.height = "1000px";
-  });
   useEffect(() => {
     socket.emit('joinRoom', {auth: token, room: id}, roomDetails => {
       if(roomDetails === undefined) return;
@@ -46,7 +41,7 @@ const Room = (props) => {
                 <PartnerInfo names = { names } />
                 <Question style={{marginTop: "20px", marginBottom:"20px"}} questionTitle = { questionTitle } questionDesc = { questionDesc } questionDiff = {difficulty} />
  
-                <CodeEnv id = { id } socket = { socket } ref={codemirrorRef}/>
+                <CodeEnv id = { id } socket = { socket }/>
             </Container>
         </div>
     )

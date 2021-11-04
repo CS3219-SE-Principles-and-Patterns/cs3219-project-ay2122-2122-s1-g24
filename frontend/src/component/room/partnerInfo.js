@@ -18,7 +18,7 @@ const PartnerInfo = (props) => {
 
     return (
         <div>
-            <h3>You are playing with: {partnerName === "" ? user : partnerName}</h3>
+            <h3 style={{padding:"10px"}}>You are playing with: {partnerName === "" ? user : partnerName}</h3>
         </div>
     )
 }

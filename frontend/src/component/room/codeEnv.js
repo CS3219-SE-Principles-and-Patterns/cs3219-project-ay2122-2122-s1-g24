@@ -45,8 +45,7 @@ const CodeEnv = ({ id, socket }) => {
         mode: 'text/x-java',
         theme: 'monokai',
         lineNumbers: true,
-        autofocus: true,
-        height: 100
+        autofocus: true
       }}
       editorDidMount={(editor) => {
         setEditor(editor);
