@@ -9,6 +9,19 @@ import { Server, Socket } from 'socket.io';
 import RoomsRepository from './rooms.repository';
 import AuthService from '../auth/auth.service';
 
+interface Position {
+  ch: number;
+  line: number;
+}
+
+interface Changes {
+  from: Position;
+  to: Position;
+  text: string[];
+  removed: string[];
+  origin: string;
+}
+
 @WebSocketGateway({
   namespace: 'rooms',
   transports: ['websocket'],
@@ -52,13 +65,13 @@ export default class RoomsGateway {
     @ConnectedSocket() client: Socket,
     @MessageBody('auth') token,
     @MessageBody('room') room: string,
-    @MessageBody('updates') changes: string,
+    @MessageBody('updates') changes: Changes,
   ) {
     try {
       this.authService.verify(token);
       // TODO: Test if this causes duplicate changes in the sender
       // If it does, then need to try and use the sync methods instead
-      this.server.to(room).emit('docUpdate', changes);
+      client.broadcast.to(room).emit('docUpdate', { changes, token });
     } catch (err) {
       return err;
     }
