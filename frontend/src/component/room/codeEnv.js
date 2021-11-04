@@ -45,7 +45,8 @@ const CodeEnv = ({ id, socket }) => {
         mode: 'text/x-java',
         theme: 'monokai',
         lineNumbers: true,
-        autofocus: true
+        autofocus: true,
+        height: 100
       }}
       editorDidMount={(editor) => {
         setEditor(editor);
@@ -53,7 +54,7 @@ const CodeEnv = ({ id, socket }) => {
       onBeforeChange={(editor, data, value) => {
         setCodeValue(data, value);
       }}
-      style={{height: "auto"}}
+      
     />
   );
 };
