@@ -6,7 +6,6 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import * as Automerge from 'automerge';
 import RoomsRepository from './rooms.repository';
 import AuthService from '../auth/auth.service';
 
@@ -53,7 +52,7 @@ export default class RoomsGateway {
     @ConnectedSocket() client: Socket,
     @MessageBody('auth') token,
     @MessageBody('room') room: string,
-    @MessageBody('updates') changes: Automerge.BinaryChange[],
+    @MessageBody('updates') changes: string,
   ) {
     try {
       this.authService.verify(token);

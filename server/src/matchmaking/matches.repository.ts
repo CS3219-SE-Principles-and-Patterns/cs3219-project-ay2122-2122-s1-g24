@@ -13,10 +13,14 @@ export default class MatchesRepository {
   /**
    * Looks for any user also registered in this difficulty, and pops them from the collection.
    * @param difficulty The difficulty to search for.
+   * @param sub The user to find a match for.
    * @returns Match object containing the other user's details.
    */
-  public async find(difficulty: Difficulty): Promise<Match> {
-    const match = await this.matchModel.findOneAndDelete({ difficulty });
+  public async find(difficulty: Difficulty, sub: string): Promise<Match> {
+    const match = await this.matchModel.findOneAndDelete({
+      user: { $ne: sub },
+      difficulty,
+    });
 
     return match;
   }
