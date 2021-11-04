@@ -4,10 +4,10 @@ import { Difficulty } from '../questions/questions.const';
 
 @Schema({ collection: 'matches' })
 export class Match {
-  @Prop({ required: true })
+  @Prop({ required: true, index: true })
   user: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, index: true })
   socketId: string;
 
   @Prop({

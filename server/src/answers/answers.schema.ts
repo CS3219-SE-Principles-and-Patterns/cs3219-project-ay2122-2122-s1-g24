@@ -22,6 +22,9 @@ export class Answer {
 
   @Prop({ required: true })
   answer: string;
+
+  @Prop({ type: Date, default: Date.now() })
+  createdAt: Date;
 }
 
 export type AnswerDocument = Answer & Document;
