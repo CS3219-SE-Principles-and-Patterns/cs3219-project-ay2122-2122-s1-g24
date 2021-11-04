@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Controlled as Editor } from 'react-codemirror2';
 import 'codemirror/lib/codemirror.css';
