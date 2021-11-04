@@ -16,14 +16,11 @@ const Header = () => {
     return (
       <Navbar bg="dark" variant="dark">
         <Container>
-          <Link to="/">Prep Prep</Link>
+          <Navbar.Brand href="/">Peer prep</Navbar.Brand>
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
           <Navbar.Brand >{user}</Navbar.Brand>
-          <Navbar.Brand href="/" onClick={()=> {
-            logout();
-            user = Cookies.get("username");
-            loggedIn = Cookies.get("isLoggedIn"); }}>logout</Navbar.Brand>
+          <Navbar.Brand href="/" onClick={logout}>logout</Navbar.Brand>
           </Navbar.Collapse>
         </Container>
       </Navbar>

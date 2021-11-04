@@ -1,9 +1,9 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container'
+import { Button, Spinner } from 'react-bootstrap'
 import style from './dropdown.css'
 import Dropdown from 'react-bootstrap/Dropdown'
 import {useAuth} from  "../context/AuthContext";
-import Button from 'react-bootstrap/Button'
 import io from "socket.io-client";
 import { useHistory } from 'react-router-dom';
 
@@ -34,12 +34,13 @@ var DropDownMenu = () => {
 
 
     return (
-        <Container fluid style = {{marginTop : "20px"}}>
-            <div className = {style.header}>
+        <Container fluid style = {{marginTop : "20px", display: 'flex',  justifyContent:'center'}}>
+            <div>
+            <div className = {style.header} >
                 <h3>Select Question</h3>
             </div>
-            <Dropdown>
-                <Dropdown.Toggle variant="transparent" id="dropdown-basic">
+            <Dropdown  fluid style = {{marginTop : "20px", display: 'flex', width:"50"}}>
+                <Dropdown.Toggle variant="success" id="dropdown-basic" style = {{width:"50"}}>
                     {difficulty}
                 </Dropdown.Toggle>
             <Dropdown.Menu>
@@ -48,7 +49,17 @@ var DropDownMenu = () => {
                 <Dropdown.Item href="#/hard" onClick={()=> {difficulty = "hard"}}>Hard</Dropdown.Item>
             </Dropdown.Menu>
             </Dropdown>
-            <Button variant="primary" onClick={matchMake}>Find a match</Button>{' '}
+            <Button fluid style = {{marginTop : "20px", display: 'flex', width:"50"}} variant="primary" onClick={matchMake} style = {{marginTop : "20px", display: 'flex'}}>
+            <Spinner
+                    as="span"
+                    variant="warning"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                    animation="grow"/>
+                      Loading...
+                </Button>{' '}
+            </div>
         </Container>
     );
 }
