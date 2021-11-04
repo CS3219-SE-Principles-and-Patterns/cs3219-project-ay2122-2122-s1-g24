@@ -6,34 +6,34 @@ import Question from './question';
 import PartnerInfo from './partnerInfo';
 
 const Room = (props) => {
-    const [ questionTitle, setQuestionTitle ] = useState();
-    const [ questionDesc, setQuestionDesc ] = useState();
-    const [ names, setNames ] = useState();
+  const [questionTitle, setQuestionTitle] = useState();
+  const [questionDesc, setQuestionDesc] = useState();
+  const [names, setNames] = useState();
 
-    const id = props.match.params.id;
-    const { token } =  useAuth();
-    const socket = io('ws://localhost:8080/rooms', { transports: ['websocket'] });
+  const id = props.match.params.id;
+  const { token } =  useAuth();
+  const socket = io('ws://localhost:8080/rooms', { transports: ['websocket'] });
 
-    useEffect(() => {
-        socket.emit('joinRoom', {auth: token, room: id}, roomDetails => {
-            if(roomDetails === undefined) return;
-            setQuestionTitle(roomDetails.questionTitle);
-            setQuestionDesc(roomDetails.questionDesc);
-            setNames(roomDetails.users);
-        });
+  useEffect(() => {
+    socket.emit('joinRoom', {auth: token, room: id}, roomDetails => {
+      if(roomDetails === undefined) return;
+      setQuestionTitle(roomDetails.questionTitle);
+      setQuestionDesc(roomDetails.questionDesc);
+      setNames(roomDetails.users);
+    });
 
-        return function cleanup() {
-            socket.emit("endSession", {auth: token, room: id});
-        };
-    }, []);
+    return function cleanup() {
+      socket.emit('endSession', {auth: token, room: id});
+    };
+  }, []);
 
-    return (
-        <div>
-            <PartnerInfo names = { names } />
-            <Question questionTitle = { questionTitle } questionDesc = { questionDesc } />
-            <CodeEnv id = { id } socket = { socket } />
-        </div>
-    )
+  return (
+    <div>
+      <PartnerInfo names={names} />
+      <Question questionTitle={questionTitle} questionDesc={questionDesc} />
+      <CodeEnv id={id} socket={socket} />
+    </div>
+  )
 }
 
 export default Room;
