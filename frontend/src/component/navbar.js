@@ -4,19 +4,23 @@ import Container from 'react-bootstrap/Container'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useAuth } from  "../context/AuthContext";
 import {Link} from "react-router-dom";
-
+import logo from '../assets/logo.png'
 const Cookies = require("js-cookie");
+
+
 
 const Header = () => {
   const {logout} =  useAuth();
   var user = Cookies.get("username");
   var loggedIn = Cookies.get("isLoggedIn");
+
+
   if (loggedIn == "true") {
 
     return (
       <Navbar bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="/">Peer prep</Navbar.Brand>
+          <Navbar.Brand href="/"><img src={logo} width="50" height="50" className="d-inline-block align-top"alt="Peer Prep" /> </Navbar.Brand>
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
           <Navbar.Brand >{user}</Navbar.Brand>
@@ -29,7 +33,7 @@ const Header = () => {
   return (
     <Navbar bg="dark" variant="dark">
     <Container>
-      <Link to="/">Prep Prep</Link>
+    <Navbar.Brand href="/"><img src={logo} width="50" height="50" className="d-inline-block align-top"alt="Peer Prep" /></Navbar.Brand>
       <Navbar.Toggle />
       <Navbar.Collapse className="justify-content-end">
       <Navbar.Brand href="http://localhost:8080/login" >login</Navbar.Brand>
