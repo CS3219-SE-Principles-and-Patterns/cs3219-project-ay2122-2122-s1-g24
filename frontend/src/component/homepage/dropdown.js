@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { withRouter } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Cookies from 'js-cookie';
 import style from './dropdown.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 import io from 'socket.io-client';
-import { useHistory } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 const DIFFICULTY = { EASY: 'easy', MEDIUM: 'medium', HARD: 'hard' };
-const DropDownMenu = () => {
-  const history = useHistory();
+
+const DropDownMenu = ({ history }) => {
   const token = Cookies.get('token')
   const loggedIn = Cookies.get('isLoggedIn');
   const socket = useRef(null);
@@ -47,7 +47,7 @@ const DropDownMenu = () => {
   };
 
   const buttonContent = () => {
-    if (loggedIn == 'false') {
+    if (loggedIn !== 'true') {
       return (
         <Button variant="primary" href="http://localhost:8080/login" disabled={loading} style={{ marginTop: "3px" }}>
           Login
@@ -72,7 +72,6 @@ const DropDownMenu = () => {
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Dropdown.Item
-            href="#/Easy"
             onClick={() => {
               setDiff(DIFFICULTY.EASY)
               setLoading(false);
@@ -81,7 +80,6 @@ const DropDownMenu = () => {
             Easy
           </Dropdown.Item>
           <Dropdown.Item
-            href="#/Medium"
             onClick={() => {
               setDiff(DIFFICULTY.MEDIUM)
               setLoading(false);
@@ -90,7 +88,6 @@ const DropDownMenu = () => {
             Medium
           </Dropdown.Item>
           <Dropdown.Item
-            href="#/Hard"
             onClick={() => {
               setDiff(DIFFICULTY.HARD)
               setLoading(false);
@@ -104,4 +101,4 @@ const DropDownMenu = () => {
     </Container>
   );
 };
-export default DropDownMenu;
+export default withRouter(DropDownMenu);

@@ -32,10 +32,6 @@ const Room = (props) => {
     };
   }, []);
 
-  if (loggedIn === 'false') {
-    return <Redirect to="/unauthorised" />;
-  }
-
   return (
     <div>
       <Container style={{ marginTop: "20px" }}>

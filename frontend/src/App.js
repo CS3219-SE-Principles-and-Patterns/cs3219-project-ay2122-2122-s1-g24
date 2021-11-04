@@ -2,32 +2,31 @@ import './App.css';
 import React from 'react';
 import {
   BrowserRouter as Router,
-  Switch,
-  Route
+  Switch
 } from 'react-router-dom'
+import { CookiesProvider } from 'react-cookie'
 import homepage from './component/homepage/homepage'
 import room from './component/room/room'
 import SignIn from './component/Auth/signin';
 import SetToken from './component/Auth/setAuth';
 import { useAuth } from './context/AuthContext'
-import { CookiesProvider } from 'react-cookie'
+import PublicRoute from './routes/PublicRoute'
+import PrivateRoute from './routes/PrivateRoute'
 import PageNotFound from './error/404Page'
 import unathorised from './error/unAuthorised'
-import Header from './component/navbar';
 
 const App = () => {
   const { login, loggedIn, logout, user, token } = useAuth();
 
   return (
-    <div>
-      <CookiesProvider>
-        <Header />
-        <Router>
+    <CookiesProvider>
+      <Router>
+        <div>
           <Switch>
-            <Route exact path={'/'} useAuth={useAuth} component={homepage} />
-            <Route exact path={'/room/:difficulty/:id'} component={room} />
-            <Route exact path={'/login'} component={SignIn} />
-            <Route
+            <PublicRoute exact path={'/'} useAuth={useAuth} component={homepage} />
+            <PrivateRoute exact path={'/room/:difficulty/:id'} component={room} />
+            <PublicRoute exact path={'/login'} component={SignIn} />
+            <PublicRoute
               path={'/setAuth'}
               login={login}
               loggedIn={loggedIn}
@@ -36,12 +35,12 @@ const App = () => {
               token={token}
               component={SetToken}
             />
-            <Route exact path={'/unauthorised'} component={unathorised} />
-            <Route component={PageNotFound} />
+            <PublicRoute exact path={'/unauthorised'} component={unathorised} />
+            <PublicRoute component={PageNotFound} />
           </Switch>
-        </Router>
-      </CookiesProvider>
-    </div>
+        </div>
+      </Router>
+    </CookiesProvider>
   );
 };
 

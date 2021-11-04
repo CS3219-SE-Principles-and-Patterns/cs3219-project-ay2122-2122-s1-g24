@@ -22,7 +22,7 @@ const AuthProvider = (props) => {
     setUser('');
     setToken('');
     setLoggedIn(false);
-    Cookies.remove('userame')
+    Cookies.remove('username')
     Cookies.remove('token');
     Cookies.set('isLoggedIn', false);
   };
