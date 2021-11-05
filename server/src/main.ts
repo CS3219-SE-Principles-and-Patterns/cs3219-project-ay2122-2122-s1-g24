@@ -3,8 +3,10 @@ import AppModule from './app.module';
 import config from './config';
 
 async function bootstrap() {
-  const { port } = config();
-  const app = await NestFactory.create(AppModule);
+  const { port, frontendURL } = config();
+  const app = await NestFactory.create(AppModule, {
+    cors: { origin: frontendURL },
+  });
   await app.listen(port);
 }
 
