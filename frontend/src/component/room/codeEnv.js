@@ -56,6 +56,7 @@ const CodeEnv = ({ id, socket, history }) => {
   };
 
   const postAnswers = async (ans) => {
+    if (ans == DEFAULT_VALUE) return;
     const axiosInstance = axios.create({ baseURL: 'http://localhost:8080' });
 
     try {
