@@ -10,10 +10,11 @@ import { Redirect } from 'react-router-dom';
 const Room = (props) => {
   const [questionTitle, setQuestionTitle] = useState();
   const [questionDesc, setQuestionDesc] = useState();
+  const [questionDiff, setQuestionDiff] = useState();
   const [users, setUsers] = useState();
 
   const id = props.match.params.id;
-  const difficulty = props.match.params.difficulty;
+  var difficulty = "easy";
   const token = Cookies.get('token')
   const loggedIn = Cookies.get('isLoggedIn');
   const socket = io('ws://localhost:8080/rooms', { transports: ['websocket'] });
@@ -25,6 +26,7 @@ const Room = (props) => {
       setQuestionDesc(roomDetails.questionDesc);
       const userNames = [roomDetails.users[0].name, roomDetails.users[1].name];
       setUsers(userNames);
+      difficulty = roomDetails.difficulty;
     });
   }, []);
 
