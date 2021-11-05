@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
+import { Row, Col, Button, Container } from 'react-bootstrap';
 import { Controlled as Editor } from 'react-codemirror2';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/monokai.css';
 import 'codemirror/mode/clike/clike.js';
-import { Row, Col, Button, Container } from 'react-bootstrap';
-import axios from 'axios';
-import Cookies from 'js-cookie';
-import { withRouter } from 'react-router-dom';
 
 const DEFAULT_VALUE = '// Enter code here';
 const OTHER_USER_ORIGIN = 'from-other-user';
@@ -19,15 +19,15 @@ const CodeEnv = ({ id, socket, history }) => {
   const setCodeValue = (changes, value) => {
     setCode(value);
 
-    if (changes.origin == OTHER_USER_ORIGIN) return;
+    if (changes.origin === OTHER_USER_ORIGIN) return;
 
     socket.emit('update', { auth: token, room: id, updates: changes });
   };
-  
+
 
   useEffect(() => {
     const listener = ({ changes, token: sentToken }) => {
-      if (token == sentToken) return;
+      if (token === sentToken) return;
       const { text, from, to } = changes;
 
       if (editorState)
@@ -36,15 +36,15 @@ const CodeEnv = ({ id, socket, history }) => {
 
     const endListener = async () => {
       if (editorState)
-        await postAnswers(editorState.getValue());      
+        await postAnswers(editorState.getValue());
     }
 
     socket.on('docUpdate', listener);
-    
+
     socket.on('finalizeEnd', endListener);
 
     return () => {
-      
+
       socket.off('finalizeEnd', endListener);
       socket.off('docUpdate', listener);
     };
@@ -58,7 +58,8 @@ const CodeEnv = ({ id, socket, history }) => {
   };
 
   const postAnswers = async (ans) => {
-    if (ans == DEFAULT_VALUE) return;
+    if (ans === DEFAULT_VALUE) return;
+
     const axiosInstance = axios.create({ baseURL: 'http://localhost:8080' });
 
     try {

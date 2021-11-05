@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { Container } from 'react-bootstrap';
 import io from 'socket.io-client';
 import Cookies from 'js-cookie';
 import CodeEnv from './codeEnv';
 import Question from './question';
 import PartnerInfo from './partnerInfo';
-import { Container } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
 
 const Room = (props) => {
   const [questionTitle, setQuestionTitle] = useState();
