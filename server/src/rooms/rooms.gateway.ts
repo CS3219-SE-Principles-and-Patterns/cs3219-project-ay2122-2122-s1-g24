@@ -86,22 +86,12 @@ export default class RoomsGateway {
     @ConnectedSocket() client: Socket,
     @MessageBody('auth') token,
     @MessageBody('room') room: string,
-    @MessageBody('answer') answer: string,
   ) {
     try {
       this.authService.verify(token);
       this.server.to(room).emit('end');
       this.server.in(room).socketsLeave(room);
       const roomDetails = await this.roomRepository.endSession(room);
-      const answerDto: AnswerDto = {
-        title: roomDetails.questionTitle,
-        description: roomDetails.questionDesc,
-        difficulty: roomDetails.difficulty,
-        answer,
-      };
-      roomDetails.users.forEach((user) => {
-        this.answersRepo.addAnswer(user.uid, answerDto);
-      });
     } catch (err) {
       return err;
     }
