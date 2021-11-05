@@ -6,7 +6,6 @@ const PartnerInfo = ({users}) => {
 
   useEffect(() => {
     const user = Cookies.get('username');
-    console.log(users);
     setPartnerName(users[0] === user ? users[1] : users[0]);
   }, []);
 

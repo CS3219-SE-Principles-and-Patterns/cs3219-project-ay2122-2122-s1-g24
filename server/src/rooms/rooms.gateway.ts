@@ -8,9 +8,6 @@ import {
 import { Server, Socket } from 'socket.io';
 import RoomsRepository from './rooms.repository';
 import AuthService from '../auth/auth.service';
-import AnswersRepository from 'answers/answers.repository';
-import { AnswerDto } from 'answers/answers.const';
-import { Difficulty } from 'questions/questions.const';
 
 interface Position {
   ch: number;
@@ -34,7 +31,6 @@ export default class RoomsGateway {
   public constructor(
     private roomRepository: RoomsRepository,
     private authService: AuthService,
-    private answersRepo: AnswersRepository,
   ) {}
 
   @WebSocketServer()
@@ -81,27 +77,15 @@ export default class RoomsGateway {
     }
   }
 
-  @SubscribeMessage('endSession')
+  @SubscribeMessage('initiateEnd')
   async handleEnd(
-    @ConnectedSocket() client: Socket,
+    @ConnectedSocket() _client: Socket,
     @MessageBody('auth') token,
     @MessageBody('room') room: string,
-    @MessageBody('answer') answer: string,
   ) {
     try {
       this.authService.verify(token);
       this.server.to(room).emit('end');
-      this.server.in(room).socketsLeave(room);
-      const roomDetails = await this.roomRepository.endSession(room);
-      const answerDto: AnswerDto = {
-        title: roomDetails.questionTitle,
-        description: roomDetails.questionDesc,
-        difficulty: roomDetails.difficulty,
-        answer,
-      };
-      roomDetails.users.forEach((user) => {
-        this.answersRepo.addAnswer(user.uid, answerDto);
-      });
     } catch (err) {
       return err;
     }

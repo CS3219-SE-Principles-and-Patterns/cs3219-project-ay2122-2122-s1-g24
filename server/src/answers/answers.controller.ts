@@ -8,23 +8,18 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import JwtAuthGuard from '../auth/jwt/jwt.guard';
-import { AnswerDto } from './answers.const';
-import AnswersRepository from './answers.repository';
 import { Answer } from './answers.schema';
+import AnswersService from './answers.service';
 
 @Controller('answers')
 export default class AnswersController {
-  constructor(private readonly answersRepository: AnswersRepository) {}
+  constructor(private readonly answersService: AnswersService) {}
 
   @Get()
   @UseGuards(JwtAuthGuard)
   public async getAnswers(@Request() req): Promise<Answer[]> {
     try {
-      const answers: Answer[] = await this.answersRepository.findAllForUser(
-        req.user.sub,
-      );
-
-      return answers;
+      return await this.answersService.findAllForUser(req.user.sub);
     } catch (err) {
       throw new BadRequestException(err.message);
     }
@@ -34,15 +29,17 @@ export default class AnswersController {
   @UseGuards(JwtAuthGuard)
   public async submitAnswers(
     @Request() req,
-    @Body('answer') answerDto: AnswerDto,
+    @Body('answer') answer: string,
+    @Body('roomid') roomid: string,
   ): Promise<Answer> {
     try {
-      const answer: Answer = await this.answersRepository.addAnswer(
+      const savedAnswer: Answer = await this.answersService.addAnswer(
         req.user.sub,
-        answerDto,
+        roomid,
+        answer,
       );
 
-      return answer;
+      return savedAnswer;
     } catch (err) {
       throw new BadRequestException(err.message);
     }
