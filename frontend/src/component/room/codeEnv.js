@@ -44,6 +44,8 @@ const CodeEnv = ({ id, socket, history }) => {
     socket.on('finalizeEnd', endListener);
 
     return () => {
+      
+      socket.off('finalizeEnd', endListener);
       socket.off('docUpdate', listener);
     };
   }, [editorState]);
