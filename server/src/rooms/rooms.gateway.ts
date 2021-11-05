@@ -47,11 +47,11 @@ export default class RoomsGateway {
     @MessageBody('room') room: string,
   ): Promise<any> {
     try {
-      this.authService.verify(token);
+      const user = this.authService.verify(token);
 
       // TODO: Retrieve document contents from database (or request history from other user)
       const roomDetails = await this.roomRepository.getRoomDetails(room);
-      if (roomDetails) {
+      if (roomDetails && roomDetails.users.some((u) => u.uid == user.sub)) {
         client.join(room);
 
         return roomDetails;
