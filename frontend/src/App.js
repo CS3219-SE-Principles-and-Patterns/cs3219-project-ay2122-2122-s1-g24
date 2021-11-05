@@ -9,6 +9,7 @@ import homepage from './component/homepage/homepage'
 import room from './component/room/room'
 import SignIn from './component/Auth/signin';
 import SetToken from './component/Auth/setAuth';
+import ProfilePage from './component/Profile/ProfilePage';
 import { useAuth } from './context/AuthContext'
 import PublicRoute from './routes/PublicRoute'
 import PrivateRoute from './routes/PrivateRoute'
@@ -23,11 +24,12 @@ const App = () => {
       <Router>
         <div>
           <Switch>
-            <PublicRoute exact path={'/'} useAuth={useAuth} component={homepage} />
-            <PrivateRoute exact path={'/room/:difficulty/:id'} component={room} />
-            <PublicRoute exact path={'/login'} component={SignIn} />
+            <PublicRoute exact path="/" useAuth={useAuth} component={homepage} />
+            <PrivateRoute exact path="/profile" component={ProfilePage} />
+            <PrivateRoute exact path="/room/:difficulty/:id" component={room} />
+            <PublicRoute exact path="/login" component={SignIn} />
             <PublicRoute
-              path={'/setAuth'}
+              path="/setAuth"
               login={login}
               loggedIn={loggedIn}
               logout={logout}
@@ -35,7 +37,7 @@ const App = () => {
               token={token}
               component={SetToken}
             />
-            <PublicRoute exact path={'/unauthorised'} component={unathorised} />
+            <PublicRoute exact path="/unauthorised" component={unathorised} />
             <PublicRoute component={PageNotFound} />
           </Switch>
         </div>
