@@ -10,7 +10,7 @@ import { Redirect } from 'react-router-dom';
 const Room = (props) => {
   const [questionTitle, setQuestionTitle] = useState();
   const [questionDesc, setQuestionDesc] = useState();
-  const [names, setNames] = useState();
+  const [users, setUsers] = useState();
 
   const id = props.match.params.id;
   const difficulty = props.match.params.difficulty;
@@ -23,19 +23,17 @@ const Room = (props) => {
       if (roomDetails === undefined) return;
       setQuestionTitle(roomDetails.questionTitle);
       setQuestionDesc(roomDetails.questionDesc);
-      setNames(roomDetails.users);
-
+      const userNames = [roomDetails.users[0].name, roomDetails.users[1].name];
+      setUsers(userNames);
     });
-
-    return function cleanup() {
-      socket.emit('endSession', { auth: token, room: id });
-    };
   }, []);
+
+  const partner = users === undefined ? <div></div> : <PartnerInfo users={users}/>;
 
   return (
     <div>
       <Container style={{ marginTop: "20px" }}>
-        <PartnerInfo names={names} />
+        {partner}
         <Question style={{ marginTop: "20px", marginBottom: "20px" }} questionTitle={questionTitle} questionDesc={questionDesc} questionDiff={difficulty} />
         <CodeEnv id={id} socket={socket} />
       </Container>
