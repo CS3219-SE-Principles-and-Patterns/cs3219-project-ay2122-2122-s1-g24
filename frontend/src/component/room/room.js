@@ -10,12 +10,11 @@ import { Redirect } from 'react-router-dom';
 const Room = (props) => {
   const [questionTitle, setQuestionTitle] = useState();
   const [questionDesc, setQuestionDesc] = useState();
+  const [questionDiff, setQuestionDiff] = useState();
   const [users, setUsers] = useState();
 
   const id = props.match.params.id;
-  const difficulty = props.match.params.difficulty;
   const token = Cookies.get('token')
-  const loggedIn = Cookies.get('isLoggedIn');
   const socket = io('ws://localhost:8080/rooms', { transports: ['websocket'] });
 
   useEffect(() => {
@@ -23,8 +22,12 @@ const Room = (props) => {
       if (roomDetails === undefined) return;
       setQuestionTitle(roomDetails.questionTitle);
       setQuestionDesc(roomDetails.questionDesc);
+      setQuestionDiff(roomDetails.difficulty);
+      console.log(roomDetails);
+      console.log(questionDiff);
       const userNames = [roomDetails.users[0].name, roomDetails.users[1].name];
       setUsers(userNames);
+
     });
   }, []);
 
@@ -34,7 +37,7 @@ const Room = (props) => {
     <div>
       <Container style={{ marginTop: "20px" }}>
         {partner}
-        <Question style={{ marginTop: "20px", marginBottom: "20px" }} questionTitle={questionTitle} questionDesc={questionDesc} questionDiff={difficulty} />
+        <Question style={{ marginTop: "20px", marginBottom: "20px" }} questionTitle={questionTitle} questionDesc={questionDesc} questionDiff={questionDiff} />
         <CodeEnv id={id} socket={socket} />
       </Container>
     </div>
