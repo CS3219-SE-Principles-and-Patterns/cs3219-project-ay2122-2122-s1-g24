@@ -38,6 +38,12 @@ const CodeEnv = ({ id, socket }) => {
     return () => { socket.off('docUpdate', listener); }
   }, [editorState]);
 
+  useEffect(() => {
+    return function cleanup() {
+      socket.emit('endSession', { auth: token, room: id, answer: code });
+    };
+  }, []);
+  
   return (
     <Editor
       value={code}
