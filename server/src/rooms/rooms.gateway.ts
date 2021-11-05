@@ -85,7 +85,7 @@ export default class RoomsGateway {
   ) {
     try {
       this.authService.verify(token);
-      this.server.to(room).emit('end');
+      this.server.to(room).emit('finalizeEnd');
     } catch (err) {
       return err;
     }

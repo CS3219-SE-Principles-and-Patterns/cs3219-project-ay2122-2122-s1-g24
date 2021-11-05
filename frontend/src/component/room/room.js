@@ -23,8 +23,6 @@ const Room = (props) => {
       setQuestionTitle(roomDetails.questionTitle);
       setQuestionDesc(roomDetails.questionDesc);
       setQuestionDiff(roomDetails.difficulty);
-      console.log(roomDetails);
-      console.log(questionDiff);
       const userNames = [roomDetails.users[0].name, roomDetails.users[1].name];
       setUsers(userNames);
 
