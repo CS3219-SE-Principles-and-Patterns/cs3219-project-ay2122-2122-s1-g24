@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Cookies from 'js-cookie';
@@ -14,33 +14,33 @@ const DIFFICULTY = { EASY: 'easy', MEDIUM: 'medium', HARD: 'hard' };
 const DropDownMenu = ({ history }) => {
   const token = Cookies.get('token')
   const loggedIn = Cookies.get('isLoggedIn');
-  const socket = useRef(null);
+  const socket = io('ws://localhost:8080/matchmaking', {
+    transports: ['websocket']
+  });
   const [diff, setDiff] = useState('pick a difficulty');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    socket.current = io('ws://localhost:8080/matchmaking', {
-      transports: ['websocket']
-    });
-
-    return function cleanup() {
-      socket.current.disconnect();
+    const listener = (match) => {
+      history.push(`/room/${diff}/${match}`);
     };
-  }, []);
+
+    socket.on('assignRoom', listener);
+
+    return () => {
+      socket.off('assignRoom', listener);
+    };
+  }, [diff]);
 
   const matchMake = () => {
     setLoading(true);
-    socket.current.emit(
+    socket.emit(
       'findMatch',
       {
         difficulty: diff,
         auth: token
       }
     );
-
-    socket.current.on('assignRoom', match => {
-      history.push(`/room/${diff}/${match}`);
-    });
     setTimeout(() => {
       setLoading(false);
     }, 30000);

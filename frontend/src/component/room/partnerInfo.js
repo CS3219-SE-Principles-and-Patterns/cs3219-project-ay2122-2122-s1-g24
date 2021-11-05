@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 
-const PartnerInfo = ({users}) => {
+const PartnerInfo = ({ users }) => {
   const [partnerName, setPartnerName] = useState();
 
   useEffect(() => {

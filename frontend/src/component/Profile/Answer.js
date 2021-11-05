@@ -11,7 +11,7 @@ const Answer = ({ answer: answerObj, id }) => {
   return (
     <Accordion.Item eventKey={id}>
       <Accordion.Header>{getHeader()}</Accordion.Header>
-      <Accordion.Body style={{ fontFamily: 'monospace, monospace' }}>
+      <Accordion.Body style={{ fontFamily: 'monospace, monospace', whiteSpace: 'pre' }}>
         {answer}
       </Accordion.Body>
     </Accordion.Item>
