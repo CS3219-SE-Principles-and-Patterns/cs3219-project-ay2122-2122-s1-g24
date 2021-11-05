@@ -13,6 +13,7 @@ import { Difficulty } from '../questions/questions.const';
 import RoomsRepository from 'rooms/rooms.repository';
 import QuestionsRepository from 'questions/questions.repository';
 import AuthService from 'auth/auth.service';
+import { User } from 'rooms/rooms.const';
 
 @WebSocketGateway({
   namespace: 'matchmaking',
@@ -57,8 +58,10 @@ export default class MatchmakingGateway implements OnGatewayDisconnect {
       const match = await this.matchRepository.find(diff, user.sub);
       if (match) {
         const question = await this.questionRepository.find(diff);
+        const userDto: User = { uid: user.sub, name: user.name };
+        const matchUserDto: User = { uid: match.uid, name: match.name };
         const room = await this.roomRepository.createRoom(
-          [user.sub, match.user],
+          [userDto, matchUserDto],
           question,
         );
 
@@ -69,7 +72,7 @@ export default class MatchmakingGateway implements OnGatewayDisconnect {
         return { ok: true };
       }
 
-      this.matchRepository.addUser(user.sub, client.id, diff);
+      this.matchRepository.addUser(user.sub, user.name, client.id, diff);
       client.join(client.id);
       client.emit('noMatch');
 
