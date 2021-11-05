@@ -53,7 +53,6 @@ const CodeEnv = ({ id, socket }) => {
       onBeforeChange={(editor, data, value) => {
         setCodeValue(data, value);
       }}
-      
     />
   );
 };
