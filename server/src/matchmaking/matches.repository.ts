@@ -29,8 +29,18 @@ export default class MatchesRepository {
     await this.matchModel.deleteOne({ socketId });
   }
 
-  public async addUser(user: string, socketId: string, difficulty: Difficulty) {
-    const createdMatch = new this.matchModel({ user, socketId, difficulty });
+  public async addUser(
+    uid: string,
+    name: string,
+    socketId: string,
+    difficulty: Difficulty,
+  ) {
+    const createdMatch = new this.matchModel({
+      uid,
+      name,
+      socketId,
+      difficulty,
+    });
 
     return await createdMatch.save();
   }

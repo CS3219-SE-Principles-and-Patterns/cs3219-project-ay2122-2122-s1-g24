@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Room, RoomDocument } from './rooms.schema';
 import { Question } from 'questions/questions.schema';
+import { User } from './rooms.const';
 
 @Injectable()
 export default class RoomsRepository {
@@ -10,14 +11,12 @@ export default class RoomsRepository {
     @InjectModel(Room.name) private roomModel: Model<RoomDocument>,
   ) {}
 
-  public async createRoom(
-    users: string[],
-    question: Question,
-  ): Promise<string> {
+  public async createRoom(users: User[], question: Question): Promise<string> {
     const createdRoom = new this.roomModel({
       users,
       questionTitle: question.title,
       questionDesc: question.description,
+      difficulty: question.difficulty,
     });
     await createdRoom.save();
 
@@ -28,5 +27,9 @@ export default class RoomsRepository {
     const room = await this.roomModel.findById(roomId);
 
     return room;
+  }
+
+  public async endSession(roomId: string) {
+    return await this.roomModel.findByIdAndDelete(roomId);
   }
 }

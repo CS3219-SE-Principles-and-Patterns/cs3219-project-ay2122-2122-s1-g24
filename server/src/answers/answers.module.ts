@@ -10,5 +10,6 @@ import { Answer, AnswerSchema } from './answers.schema';
   ],
   controllers: [AnswersController],
   providers: [AnswersRepository],
+  exports: [AnswersRepository],
 })
 export default class AnswersModule {}
