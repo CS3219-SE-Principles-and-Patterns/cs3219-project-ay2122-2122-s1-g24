@@ -20,6 +20,7 @@ export default class AnswersRepository {
     const createdAnswer: AnswerDocument = new this.answerModel({
       uid,
       ...answer,
+      createdAt: new Date(),
     });
 
     return await createdAnswer.save();
