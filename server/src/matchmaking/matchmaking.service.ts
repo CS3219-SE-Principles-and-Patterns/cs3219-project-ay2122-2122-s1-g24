@@ -38,7 +38,7 @@ export default class MatchmakingService {
       return { foundMatch: true, roomId, matchSocketId: match.socketId };
     }
 
-    this.matchmakingRepository.addUser(sub, name, clientId, difficulty);
+    await this.matchmakingRepository.addUser(sub, name, clientId, difficulty);
 
     return { foundMatch: false };
   }
