@@ -3,9 +3,10 @@ import AuthModule from '../auth/auth.module';
 import QuestionsModule from '../questions/questions.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Match, MatchSchema } from './matches.schema';
-import MatchesRepository from './matches.repository';
-import RoomsModule from 'rooms/rooms.module';
 import MatchmakingGateway from './matchmaking.gateway';
+import MatchmakingRepository from './matchmaking.repository';
+import MatchmakingService from './matchmaking.service';
+import RoomsModule from 'rooms/rooms.module';
 
 @Module({
   imports: [
@@ -14,6 +15,6 @@ import MatchmakingGateway from './matchmaking.gateway';
     RoomsModule,
     MongooseModule.forFeature([{ name: Match.name, schema: MatchSchema }]),
   ],
-  providers: [MatchesRepository, MatchmakingGateway],
+  providers: [MatchmakingGateway, MatchmakingRepository, MatchmakingService],
 })
 export default class MatchmakingModule {}

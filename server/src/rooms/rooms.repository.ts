@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Room, RoomDocument } from './rooms.schema';
 import { Question } from 'questions/questions.schema';
-import { User } from './rooms.const';
+import { UserDto } from './rooms.const';
 
 @Injectable()
 export default class RoomsRepository {
@@ -11,7 +11,10 @@ export default class RoomsRepository {
     @InjectModel(Room.name) private roomModel: Model<RoomDocument>,
   ) {}
 
-  public async createRoom(users: User[], question: Question): Promise<string> {
+  public async createRoom(
+    users: UserDto[],
+    question: Question,
+  ): Promise<string> {
     const createdRoom = new this.roomModel({
       users,
       questionTitle: question.title,

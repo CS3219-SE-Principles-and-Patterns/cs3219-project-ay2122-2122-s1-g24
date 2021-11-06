@@ -54,8 +54,10 @@ const DropDownMenu = ({ history }) => {
         </Button>);
     }
 
+    const disabled = loading || !Object.values(DIFFICULTY).includes(diff);
+
     return (
-      <Button variant="primary" onClick={matchMake} disabled={loading} style={{ marginTop: "5px" }}>
+      <Button variant="primary" onClick={matchMake} disabled={disabled} style={{ marginTop: "5px" }}>
         {!loading ? <span>Find a match</span> : <Loader type="TailSpin" color="#00BFFF" height={20} width={90} />}
       </Button>
     )
