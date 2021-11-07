@@ -6,6 +6,7 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
+import { JsonWebTokenError } from 'jsonwebtoken';
 import isEmpty from 'lodash/isEmpty';
 import { Server, Socket } from 'socket.io';
 import MatchmakingService from './matchmaking.service';
@@ -66,6 +67,9 @@ export default class MatchmakingGateway implements OnGatewayDisconnect {
       return { ok: true };
     } catch (err) {
       // Invalid JWT or difficulty
+      if (err instanceof JsonWebTokenError)
+        return { err: err.message, authError: true };
+
       return { err: err.message };
     }
   }
