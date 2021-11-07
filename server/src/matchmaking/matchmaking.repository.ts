@@ -5,7 +5,7 @@ import { Difficulty } from 'questions/questions.const';
 import { Match, MatchDocument } from './matches.schema';
 
 @Injectable()
-export default class MatchesRepository {
+export default class MatchmakingRepository {
   public constructor(
     @InjectModel(Match.name) private matchModel: Model<MatchDocument>,
   ) {}
@@ -26,7 +26,7 @@ export default class MatchesRepository {
   }
 
   public async removeUser(socketId: string) {
-    await this.matchModel.deleteOne({ socketId });
+    return await this.matchModel.deleteOne({ socketId });
   }
 
   public async addUser(

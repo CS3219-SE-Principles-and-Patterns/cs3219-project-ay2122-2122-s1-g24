@@ -8,12 +8,9 @@ import {
 } from '@nestjs/websockets';
 import isEmpty from 'lodash/isEmpty';
 import { Server, Socket } from 'socket.io';
-import MatchesRepository from './matches.repository';
+import MatchmakingService from './matchmaking.service';
 import { Difficulty } from '../questions/questions.const';
-import RoomsRepository from 'rooms/rooms.repository';
-import QuestionsRepository from 'questions/questions.repository';
 import AuthService from 'auth/auth.service';
-import { User } from 'rooms/rooms.const';
 
 @WebSocketGateway({
   namespace: 'matchmaking',
@@ -22,10 +19,8 @@ import { User } from 'rooms/rooms.const';
 })
 export default class MatchmakingGateway implements OnGatewayDisconnect {
   public constructor(
-    private matchRepository: MatchesRepository,
+    private readonly matchmakingService: MatchmakingService,
     private readonly authService: AuthService,
-    private roomRepository: RoomsRepository,
-    private questionRepository: QuestionsRepository,
   ) {}
 
   @WebSocketServer()
@@ -33,7 +28,7 @@ export default class MatchmakingGateway implements OnGatewayDisconnect {
 
   async handleDisconnect(client: Socket) {
     // Remove the user from any queue it might currently be in
-    await this.matchRepository.removeUser(client.id);
+    await this.matchmakingService.removeUser(client.id);
   }
 
   @SubscribeMessage('findMatch')
@@ -45,7 +40,7 @@ export default class MatchmakingGateway implements OnGatewayDisconnect {
     // Call some method from matchmaking service here
     try {
       const user = this.authService.verify(token);
-      await this.matchRepository.removeUser(client.id);
+      await this.matchmakingService.removeUser(client.id);
 
       if (isEmpty(diff))
         throw new Error('"difficulty" is a required parameter');
@@ -56,26 +51,17 @@ export default class MatchmakingGateway implements OnGatewayDisconnect {
       if (!isValidDifficulty)
         throw new Error(`${diff} is not a valid difficulty`);
 
-      const match = await this.matchRepository.find(diff, user.sub);
-      if (match) {
-        const question = await this.questionRepository.find(diff);
-        const userDto: User = { uid: user.sub, name: user.name };
-        const matchUserDto: User = { uid: match.uid, name: match.name };
-        const room = await this.roomRepository.createRoom(
-          [userDto, matchUserDto],
-          question,
-        );
+      const { foundMatch, roomId, matchSocketId } =
+        await this.matchmakingService.findMatch(client.id, diff, user);
 
-        client.emit('assignRoom', room);
-        client.to(match.socketId).emit('assignRoom', room);
-        this.server.socketsLeave(match.socketId);
-
-        return { ok: true };
+      if (foundMatch) {
+        client.emit('assignRoom', roomId);
+        client.to(matchSocketId).emit('assignRoom', roomId);
+        this.server.socketsLeave(matchSocketId);
+      } else {
+        client.join(client.id);
+        client.emit('noMatch');
       }
-
-      this.matchRepository.addUser(user.sub, user.name, client.id, diff);
-      client.join(client.id);
-      client.emit('noMatch');
 
       return { ok: true };
     } catch (err) {

@@ -1,11 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Difficulty } from 'questions/questions.const';
-import { User } from './rooms.const';
+import { UserDto } from './rooms.const';
 
 @Schema({ collection: 'rooms' })
 export class Room {
   @Prop({ required: true })
-  users: User[];
+  users: UserDto[];
 
   @Prop({ required: true })
   questionTitle: string;
