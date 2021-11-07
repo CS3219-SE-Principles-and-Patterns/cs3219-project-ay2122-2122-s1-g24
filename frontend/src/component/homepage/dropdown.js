@@ -10,6 +10,7 @@ import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 const DIFFICULTY = { EASY: 'easy', MEDIUM: 'medium', HARD: 'hard' };
+const LOGIN_URL = 'http://localhost:8080/login'
 
 const DropDownMenu = ({ history }) => {
   const token = Cookies.get('token')
@@ -39,6 +40,12 @@ const DropDownMenu = ({ history }) => {
       {
         difficulty: diff,
         auth: token
+      },
+      ({ ok, authError }) => {
+        if (!ok) { 
+          if (authError)
+            window.location.href = LOGIN_URL;
+        }
       }
     );
     setTimeout(() => {
@@ -49,7 +56,7 @@ const DropDownMenu = ({ history }) => {
   const buttonContent = () => {
     if (loggedIn !== 'true') {
       return (
-        <Button variant="primary" href="http://localhost:8080/login" disabled={loading} style={{ marginTop: "3px" }}>
+        <Button variant="primary" href={LOGIN_URL} disabled={loading} style={{ marginTop: "3px" }}>
           Login
         </Button>);
     }
