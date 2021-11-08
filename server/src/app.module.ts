@@ -6,7 +6,7 @@ import AuthModule from './auth/auth.module';
 import MongooseConfigService from './config/mongoose.config';
 import MatchmakingModule from './matchmaking/matchmaking.module';
 import QuestionsModule from './questions/questions.module';
-import RoomsModule from 'rooms/rooms.module';
+import RoomsModule from './rooms/rooms.module';
 import config from './config';
 
 @Module({

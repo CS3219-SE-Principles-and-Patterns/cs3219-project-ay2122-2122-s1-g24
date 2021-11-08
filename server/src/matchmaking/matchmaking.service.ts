@@ -5,7 +5,7 @@ import { Match } from './matches.schema';
 import MatchmakingRepository from './matchmaking.repository';
 import QuestionsRepository from '../questions/questions.repository';
 import RoomsRepository from '../rooms/rooms.repository';
-import { UserDto } from 'rooms/rooms.const';
+import { UserDto } from '../rooms/rooms.const';
 
 @Injectable()
 export default class MatchmakingService {

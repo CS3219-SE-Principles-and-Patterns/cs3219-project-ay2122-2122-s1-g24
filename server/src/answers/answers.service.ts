@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import RoomsRepository from 'rooms/rooms.repository';
-import { Room } from 'rooms/rooms.schema';
+import { Answer } from './answers.schema';
 import { AnswerDto } from './answers.const';
 import AnswersRepository from './answers.repository';
-import { Answer } from './answers.schema';
+import { Room } from '../rooms/rooms.schema';
+import RoomsRepository from '../rooms/rooms.repository';
 
 @Injectable()
 export default class AnswersService {

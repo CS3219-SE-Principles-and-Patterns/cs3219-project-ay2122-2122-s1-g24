@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Difficulty } from 'questions/questions.const';
+import { Difficulty } from '../questions/questions.const';
 import { UserDto } from './rooms.const';
 
 @Schema({ collection: 'rooms' })
