@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 import AnswersModule from './answers/answers.module';
 import AuthModule from './auth/auth.module';
 import MongooseConfigService from './config/mongoose.config';
@@ -15,6 +17,9 @@ import config from './config';
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useClass: MongooseConfigService,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..','build'),
     }),
     AnswersModule,
     AuthModule,

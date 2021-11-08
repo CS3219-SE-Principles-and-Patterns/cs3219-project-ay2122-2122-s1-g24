@@ -14,7 +14,8 @@ const Room = (props) => {
 
   const id = props.match.params.id;
   const token = Cookies.get('token')
-  const socket = io('ws://localhost:8080/rooms', { transports: ['websocket'] });
+  const HOST = window.location.origin.replace(/^http/, 'ws');
+  const socket = io(HOST + '/rooms', { transports: ['websocket'] });
 
   useEffect(() => {
     socket.emit('joinRoom', { auth: token, room: id }, roomDetails => {
@@ -24,7 +25,6 @@ const Room = (props) => {
       setQuestionDiff(roomDetails.difficulty);
       const userNames = [roomDetails.users[0].name, roomDetails.users[1].name];
       setUsers(userNames);
-
     });
   }, []);
 

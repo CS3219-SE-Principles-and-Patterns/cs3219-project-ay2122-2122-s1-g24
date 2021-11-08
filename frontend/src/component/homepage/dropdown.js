@@ -10,12 +10,13 @@ import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 const DIFFICULTY = { EASY: 'easy', MEDIUM: 'medium', HARD: 'hard' };
-const LOGIN_URL = 'http://localhost:8080/login'
+const LOGIN_URL = '/login'
 
 const DropDownMenu = ({ history }) => {
   const token = Cookies.get('token')
   const loggedIn = Cookies.get('isLoggedIn');
-  const socket = io('ws://localhost:8080/matchmaking', {
+  const HOST = window.location.origin.replace(/^http/, 'ws');
+  const socket = io(HOST + '/matchmaking', {
     transports: ['websocket']
   });
   const [diff, setDiff] = useState('pick a difficulty');

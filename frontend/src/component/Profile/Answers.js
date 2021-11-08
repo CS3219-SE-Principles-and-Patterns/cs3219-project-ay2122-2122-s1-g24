@@ -9,7 +9,7 @@ const Answers = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const axiosInstance = axios.create({ baseURL: 'http://localhost:8080' });
+      const axiosInstance = axios.create({ baseURL: '' });
       const token = Cookies.get('token');
 
       try {

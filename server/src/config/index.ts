@@ -15,7 +15,7 @@ interface Config {
 }
 
 const config = (): Config => ({
-  port: parseInt(process.env.LISTEN_PORT, 10) || 8080,
+  port: parseInt(process.env.PORT, 10) || 8080,
   mongodb: {
     host: process.env.MONGODB_HOST || 'localhost',
     protocol: process.env.MONGODB_PROTOCOL || 'mongodb',

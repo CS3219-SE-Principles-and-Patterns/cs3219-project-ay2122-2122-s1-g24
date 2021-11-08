@@ -3,7 +3,7 @@ import React from 'react';
 const SignIn = () => {
   return (
     <div>
-      <a href={`http://localhost:8080/login`}>Google Login</a>
+      <a href={`/login`}>Google Login</a>
     </div>
   );
 };

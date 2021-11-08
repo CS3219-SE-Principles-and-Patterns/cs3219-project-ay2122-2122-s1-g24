@@ -21,7 +21,7 @@ const Header = ({ history }) => {
   const authButton = isAuthenticated ? ( 
     <Navbar.Brand style={{ cursor: 'pointer' }} onClick={logout}>logout</Navbar.Brand>
   ) : (
-    <Navbar.Brand href="http://localhost:8080/login">login</Navbar.Brand>
+    <Navbar.Brand href="/login">login</Navbar.Brand>
   );
   const profilePage = isAuthenticated && (
     <Navbar.Brand href="/profile">{username}</Navbar.Brand>
