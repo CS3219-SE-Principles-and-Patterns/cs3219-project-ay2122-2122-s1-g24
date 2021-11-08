@@ -4,7 +4,7 @@ import AnswersController from './answers.controller';
 import AnswersRepository from './answers.repository';
 import AnswersService from './answers.service';
 import { Answer, AnswerSchema } from './answers.schema';
-import RoomsModule from 'rooms/rooms.module';
+import RoomsModule from '../rooms/rooms.module';
 
 @Module({
   imports: [

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Difficulty } from 'questions/questions.const';
+import { Difficulty } from '../questions/questions.const';
 import { Match, MatchDocument } from './matches.schema';
 
 @Injectable()

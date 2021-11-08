@@ -9,9 +9,9 @@ import {
 import { JsonWebTokenError } from 'jsonwebtoken';
 import isEmpty from 'lodash/isEmpty';
 import { Server, Socket } from 'socket.io';
+import AuthService from '../auth/auth.service';
 import MatchmakingService from './matchmaking.service';
 import { Difficulty } from '../questions/questions.const';
-import AuthService from 'auth/auth.service';
 
 @WebSocketGateway({
   namespace: 'matchmaking',
