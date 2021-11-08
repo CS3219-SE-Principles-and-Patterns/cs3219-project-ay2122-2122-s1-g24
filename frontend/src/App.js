@@ -26,7 +26,7 @@ const App = () => {
           <Switch>
             <PublicRoute exact path="/" useAuth={useAuth} component={homepage} />
             <PrivateRoute exact path="/profile" component={ProfilePage} />
-            <PrivateRoute exact path="/room/:difficulty/:id" component={room} />
+            <PrivateRoute exact path="/room/:id" component={room} />
             <PublicRoute exact path="/login" component={SignIn} />
             <PublicRoute
               path="/setAuth"
