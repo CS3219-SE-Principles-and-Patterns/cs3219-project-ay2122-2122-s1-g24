@@ -27,6 +27,7 @@ export default class MatchmakingGateway implements OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;
 
+  @SubscribeMessage('disconnectUser')
   async handleDisconnect(client: Socket) {
     // Remove the user from any queue it might currently be in
     await this.matchmakingService.removeUser(client.id);
@@ -57,11 +58,10 @@ export default class MatchmakingGateway implements OnGatewayDisconnect {
 
       if (foundMatch) {
         client.emit('assignRoom', roomId);
-        client.to(matchSocketId).emit('assignRoom', roomId);
+        client.broadcast.to(matchSocketId).emit('assignRoom', roomId);
         this.server.socketsLeave(matchSocketId);
       } else {
         client.join(client.id);
-        client.emit('noMatch');
       }
 
       return { ok: true };

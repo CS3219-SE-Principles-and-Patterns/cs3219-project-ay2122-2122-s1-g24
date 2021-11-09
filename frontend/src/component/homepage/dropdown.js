@@ -22,17 +22,9 @@ const DropDownMenu = ({ history }) => {
   const [diff, setDiff] = useState('pick a difficulty');
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const listener = (match) => {
-      history.push(`/room/${diff}/${match}`);
-    };
-
-    socket.on('assignRoom', listener);
-
-    return () => {
-      socket.off('assignRoom', listener);
-    };
-  }, [diff]);
+  socket.on('assignRoom', (match) => {
+    history.push(`/room/${match}`);
+  });
 
   const matchMake = () => {
     setLoading(true);
@@ -43,13 +35,14 @@ const DropDownMenu = ({ history }) => {
         auth: token
       },
       ({ ok, authError }) => {
-        if (!ok) { 
+        if (!ok) {
           if (authError)
             window.location.href = LOGIN_URL;
         }
       }
     );
     setTimeout(() => {
+      socket.emit('disconnectUser');
       setLoading(false);
     }, 30000);
   };
