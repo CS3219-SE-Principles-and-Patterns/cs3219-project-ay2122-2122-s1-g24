@@ -4,7 +4,7 @@ import { Difficulty } from '../questions/questions.const';
 
 @Schema({ collection: 'matches' })
 export class Match {
-  @Prop({ required: true, index: true })
+  @Prop({ required: true, index: true, unique: true })
   uid: string;
 
   @Prop({ required: true })
