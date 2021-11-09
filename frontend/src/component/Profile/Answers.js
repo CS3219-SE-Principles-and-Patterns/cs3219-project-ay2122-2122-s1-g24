@@ -40,7 +40,7 @@ const Answers = () => {
     <Accordion defaultActiveKey="0">
       {answers.map((answer, id) => {
         return (
-          <Answer key={id} answer={answer} />
+          <Answer key={id} id={id} answer={answer} />
         )
       })}
     </Accordion>
