@@ -1,11 +1,18 @@
+# Deployment
+
+You can visit the deployed app [here](https://peerprep24.herokuapp.com/).
+
+# Server
+
 ## Configurations
 
-1. Run the following command to ensure you are on the correct version of node. Ensure you have node version manager installed.
+1. `cd` into the `/server` directory.
+2. Run the following command to ensure you are on the correct version of node. Ensure you have node version manager installed.
 ```bash
 $ nvm use
 ```
-2. Add a `.env` file at the root of the project directory.
-3. Within the `.env` file, enter the environment variables for
+3. Add a `.env` file at the root of the project directory.
+4. Within the `.env` file, enter the environment variables for
 ```bash
 LISTEN_PORT                 # The port used for the app. Defaults to 8080.
 MONGODB_HOST                # Include port number here if needed ie. 'localhost:27017'.
@@ -44,4 +51,27 @@ $ npm run start:prod
 ```bash
 # unit tests
 $ npm run test
+```
+
+# Frontend
+
+## Configurations
+
+1. `cd` into the `/frontend` directory.
+2. Run the following command to ensure you are on the correct version of node. Ensure you have node version manager installed.
+```bash
+$ nvm use
+```
+
+## Installation
+
+```bash
+$ npm install
+```
+
+## Running the app
+
+```bash
+# development
+$ npm run start
 ```
